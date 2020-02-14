@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="Axtrics_config" translate="label" sortOrder="100">
+            <label>Axtrics Aframark</label>
+        </tab>
+        <section id="Axtrics_Aframark_config" translate="label" type="text" sortOrder="42" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Aframark</label>
+            <tab>Axtrics_config</tab>
+            <resource>Axtrics_Aframark::Axtrics_Aframark_config</resource>
+            <group id="general" translate="label" sortOrder="15" showInDefault="1" showInWebsite="0" showInStore="1">
+                <label>General Settings</label>
+                <comment></comment>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Enables or disables Extention</comment>
+                </field>
+            </group>
+            <group id="connection_setting" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="1">
+                <label>Connection Settings</label>
+                <field id="app_key" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0" >
+                    <label>App key</label>
+                    <validate>required-entry validate-length minimum-length-32 maximum-length-32</validate>
+             <!--         <backend_model>Axtrics\Aframark\Model\Config\Backend\AppKey</backend_model> -->
+                    <comment>You will find App key within your aframark control panel under store page.This is requires to connect your store.</comment>
+                </field>
+                <field id="secret_key" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0" >
+                    <label>Secret key</label>
+                    <validate>required-entry validate-length minimum-length-10 maximum-length-32</validate>
+                    <!--  <backend_model>Axtrics\Aframark\Model\Config\Backend\Secretkey</backend_model> -->
+                    <comment>You will find Secret key within your aframark control panel under store page.This is requires to connect your store.</comment>
+                </field>
+                <depends>
+                    <field id="Axtrics_Aframark_config/general/enabled">1</field>
+                </depends>
+            </group>
+            <group id="Gtm_mapping" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="1">
+                <label>GTINS Mapping</label>
+                <comment>This is highly recommended, Kindly map the correct attribute fields for the following GTINs</comment>
+                <field id="upc_code" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Do you have UPC code</label>
+                    <source_model>Axtrics\Aframark\Model\Config\Source\Yesno</source_model>
+                    <comment>Don't have Upc code then please select no </comment>
+                </field>
+                <field id="aframark_upc" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>UPC</label>
+                    <validate>required-entry</validate>
+                    <source_model>Axtrics\Aframark\Model\Config\Source\UPC</source_model>
+                    <comment>Choose the correct attribute for the UPC mapping. If you don't have UPC codes for your products then kindly click the "Don't have UPC code" checkbox</comment>
+                    <depends>
+                        <field id="Axtrics_Aframark_config/Gtm_mapping/upc_code">1</field>
+                    </depends>
+                </field>
+                <field id="ean_code" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Do you have EAN code</label>
+                    <source_model>Axtrics\Aframark\Model\Config\Source\Yesno</source_model>
+                    <comment>Don't have Ean code then please select no </comment>
+                </field>
+                <field id="aframark_ean" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>EAN</label>
+                    <validate>required-entry</validate>
+                    <source_model>Axtrics\Aframark\Model\Config\Source\EAN</source_model>
+                    <comment>Choose the correct attribute for the EAN mapping. If you don't have EAN codes for your products then kindly click the "Don't have EAN code" checkbox</comment>
+                    <depends>
+                        <field id="Axtrics_Aframark_config/Gtm_mapping/ean_code">1</field>
+                    </depends>
+                </field>
+                <field id="mpn_code" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Do you have MPN code</label>
+                    <source_model>Axtrics\Aframark\Model\Config\Source\Yesno</source_model>
+                    <comment>Don't have Mpn code then please select no </comment>
+                </field>
+                <field id="aframark_mpn" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>MPN</label>
+                    <validate>required-entry</validate>
+                    <source_model>Axtrics\Aframark\Model\Config\Source\MPN</source_model>
+                    <comment>Choose the correct attribute for the MPN mapping. If you don't have MPN codes for your products then kindly click the "Don't have MPN code" checkbox</comment>
+                    <depends>
+                        <field id="Axtrics_Aframark_config/Gtm_mapping/mpn_code">1</field>
+                    </depends>
+                </field>
+                <field id="isbn_code" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Do you have Isbn code</label>
+                    <source_model>Axtrics\Aframark\Model\Config\Source\Yesno</source_model>
+                    <comment>Don't have Isbn code then please select no </comment>
+                </field>
+                <field id="aframark_isbn" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>ISBN</label>
+                    <validate>required-entry</validate>
+                    <source_model>Axtrics\Aframark\Model\Config\Source\ISBN</source_model>
+                    <comment>Choose the correct attribute for the ISBN mapping. If you don't have ISBN codes for your products then kindly click the "Don't have ISBN code" checkbox</comment>
+                    <depends>
+                        <field id="Axtrics_Aframark_config/Gtm_mapping/isbn_code">1</field>
+                    </depends>
+                </field>
+                <depends>
+                    <field id="Axtrics_Aframark_config/general/enabled">1</field>
+                </depends>
+            </group>
+        </section>
+    </system>
+</config>

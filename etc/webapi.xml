@@ -1,0 +1,39 @@
+<?xml version="1.0" ?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+	<route method="POST" url="/V1/aframark/validate/connection">
+		<service class="Axtrics\Aframark\Api\CatelogProductInterface" method="tokenGeneration"/>
+		<resources>
+			<resource ref="anonymous"/>
+		</resources>
+	</route>
+	<route method="POST" url="/V1/aframark/catalog/list">
+		<service class="Axtrics\Aframark\Api\CatelogProductInterface" method="getCollection"/>
+		<resources>
+			<resource ref="anonymous"/>
+		</resources>
+	</route>
+	<route method="POST" url="/V1/aframark/catalog/count">
+		<service class="Axtrics\Aframark\Api\CatelogProductInterface" method="countProduct"/>
+		<resources>
+			<resource ref="anonymous"/>
+		</resources>
+	</route>
+	<route method="POST" url="/V1/aframark/customers/count">
+		<service class="Axtrics\Aframark\Api\CatelogProductInterface" method="countCustomer"/>
+		<resources>
+			<resource ref="anonymous"/>
+		</resources>
+	</route>
+	<route method="POST" url="/V1/aframark/customers/list">
+		<service class="Axtrics\Aframark\Api\CatelogProductInterface" method="customerCollection"/>
+		<resources>
+			<resource ref="anonymous"/>
+		</resources>
+	</route>
+	<route method="POST" url="/V1/aframark/public/webhooks/handler">
+		<service class="Axtrics\Aframark\Api\CatelogProductInterface" method="customEvents"/>
+		<resources>
+			<resource ref="anonymous"/>
+		</resources>
+	</route>
+</routes>

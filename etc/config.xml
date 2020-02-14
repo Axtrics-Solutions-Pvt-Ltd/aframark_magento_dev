@@ -1,0 +1,18 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+           <Axtrics_Aframark_config>
+                <general>
+                	 <display_text>Axtrics Aframark</display_text>
+                   <enable>1</enable>
+                </general>
+                <!-- <Gtm_mapping>
+                	<upc_code>1</upc_code>
+                	<ean_code>1</ean_code>
+                	<mpn_code>1</mpn_code>
+                	<isbn_code>1</isbn_code>
+                </Gtm_mapping> -->
+               
+           </Axtrics_Aframark_config>
+
+    </default>
+</config>
