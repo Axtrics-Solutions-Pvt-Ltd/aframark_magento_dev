@@ -30,4 +30,22 @@ php bin/magento module:enable Trustpilot_Reviews --clear-static-content
 ```
 
 7. Update the database schema. (Please proceed cautiously: This command is global and will enable all Magento plugins that you’ ve installed.)
+```
+php bin/magento setup:upgrade
+```
+
+8. Compile (This command is only required in production mode.)
+```
+php bin/magento setup:di:compile
+```
+
+9. Deploy static content (This command is only required in production mode.)
+```
+php bin/magento setup:static-content:deploy
+```
+
+10. Disable maintenance mode.
+```
+php bin/magento maintenance:disable
+```
 
