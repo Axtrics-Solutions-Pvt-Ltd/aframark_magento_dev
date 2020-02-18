@@ -10,31 +10,24 @@ To install the Trustpilot plugin on your website, please follow the steps provid
 ```
 php bin/magento setup:backup --code --db --media
 ```
-  (Please note that your website will be inaccessible during the backup process.)
+(Please note that your website will be inaccessible during the backup process.)
 
-
+3. Enable maintenance mode.
 ```
-npm install
-```
-
-### Compiles and hot-reloads for development
-
-```
-npm run serve
+php bin/magento maintenance:enable
 ```
 
-### Compiles and minifies for production
-
+4. Download and install the Aframark plugin using Composer.
 ```
-npm run build
-```
-
-### Lints and fixes files
-
-```
-npm run lint
+composer require aframark/module-qa
 ```
 
-### Customize configuration
+5. If this is the first time you install a plugin using Composer, Magento will ask you to provide your Magento Marketplace account credentials. To find your account information go to (https://marketplace.magento.com) > My profile > Access Keys > Create A New Access Key. Note: Your public key is your username, while your private key is your password. 
 
-See [Configuration Reference](https://cli.vuejs.org/config/).
+6. Enable the Trustpilot plugin.
+```
+php bin/magento module:enable Trustpilot_Reviews --clear-static-content
+```
+
+7. Update the database schema. (Please proceed cautiously: This command is global and will enable all Magento plugins that you’ ve installed.)
+
