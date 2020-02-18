@@ -24,7 +24,7 @@ composer require aframark/module-qa
 
 5. If this is the first time you install a plugin using Composer, Magento will ask you to provide your Magento Marketplace account credentials. To find your account information go to (https://marketplace.magento.com) > My profile > Access Keys > Create A New Access Key. Note: Your public key is your username, while your private key is your password. 
 
-6. Enable the Trustpilot plugin.
+6. Enable the Aframark plugin.
 ```
 php bin/magento module:enable Trustpilot_Reviews --clear-static-content
 ```
