@@ -2,7 +2,7 @@
 
 Aframark is an open review platform that helps consumers make better choices while helping companies showcase and improve their customer service.
 
-To install the Trustpilot plugin on your website, please follow the steps provided in this package.
+To install the Aframark plugin on your website, please follow the steps provided in this package.
 
 ## How to install the Aframark extension
 1. Log in to your Magento server using SSH (Secure Shell) and run the commands that follow.
@@ -26,7 +26,7 @@ composer require aframark/module-qa
 
 6. Enable the Aframark plugin.
 ```
-php bin/magento module:enable Trustpilot_Reviews --clear-static-content
+php bin/magento module:enable Axtrics_Aframark --clear-static-content
 ```
 
 7. Update the database schema. (Please proceed cautiously: This command is global and will enable all Magento plugins that you’ ve installed.)
