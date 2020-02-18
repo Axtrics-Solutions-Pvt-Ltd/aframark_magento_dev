@@ -1,0 +1,15 @@
+{
+    "name": "aframark/module-qa",
+    "description": "Display FAQs for your store catalogue.",
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": [
+      "OSL-3.0"
+    ],
+    "autoload": {
+      "files": [ "registration.php" ],
+      "psr-4": {
+        "Axtrics\\Aframark\\": ""
+      }
+    }
+  }
