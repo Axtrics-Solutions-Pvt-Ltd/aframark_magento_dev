@@ -105,7 +105,7 @@ class AfterDeleteProduct implements ObserverInterface
   		 $responsedata=array('action' => "Delete",'status' => 200,
             'merchant_code'=>$app_data['merchant_code'],
                     'products' => $product_collections);
-    	$url="http://aframark.axtrics.com/webhook/magento";
+    	$url="http://sandbox.aframark.com/webhook/magento";
     	
     	$this->_curl->post($url, $responsedata);
     	
