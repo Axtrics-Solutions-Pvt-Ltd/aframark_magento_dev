@@ -101,7 +101,7 @@ class OrderSuccess implements ObserverInterface
                        
                         $responsedata=array( 'status' => 200,'action'=>'NewOrder','merchant_code'=>$app_data['merchant_code'],
                     'orders' => $dataa);
-                        $url="http://aframark.axtrics.com/webhook/magento";
+                        $url="http://sandbox.aframark.com/webhook/magento";
         
         $this->_curl->post($url, $responsedata);
         
