@@ -18,6 +18,7 @@ class AfterDeleteProduct implements ObserverInterface
     protected $_afra;
     private $_storeManager;
     public $_category;
+    protected $helperblock;
 /**
  * @param \Magento\Framework\HTTP\Client\Curl $curl
  */
@@ -28,7 +29,8 @@ class AfterDeleteProduct implements ObserverInterface
             \Axtrics\Aframark\Model\Aframark $afra,
             \Magento\Store\Model\StoreManagerInterface $storeManager,
             \Magento\Catalog\Model\Category $category,
-            \Magento\Framework\View\Layout $layout
+            \Magento\Framework\View\Layout $layout,
+            \Axtrics\Aframark\Block\Data $helperBlock
             )
             {
             $this->layout = $layout;
@@ -38,7 +40,7 @@ class AfterDeleteProduct implements ObserverInterface
             $this->productRepository = $productRepository;
             $this->_storeManager = $storeManager;
             $this->_category = $category;
-
+            $this->helperblock = $helperBlock;
             }
     
     public function execute(Observer $observer)
@@ -105,8 +107,7 @@ class AfterDeleteProduct implements ObserverInterface
   		 $responsedata=array('action' => "Delete",'status' => 200,
             'merchant_code'=>$app_data['merchant_code'],
                     'products' => $product_collections);
-    	$url="http://sandbox.aframark.com/webhook/magento";
-    	
+        $url=$this->helperblock->getAfraUrl();
     	$this->_curl->post($url, $responsedata);
     	
     	$response = $this->_curl->getBody();
@@ -115,7 +116,7 @@ class AfterDeleteProduct implements ObserverInterface
     }
     catch(\Exception $e){
 $product = false;
-die("errro");
+$this->logger->critical($e->getMessage());
     	
     }
       

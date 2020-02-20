@@ -2,7 +2,7 @@
     <default>
            <Axtrics_Aframark_config>
                 <general>
-                	 <display_text>Axtrics Aframark</display_text>
+                	 <display_text>Aframark</display_text>
                    <enable>1</enable>
                 </general>
                 <!-- <Gtm_mapping>

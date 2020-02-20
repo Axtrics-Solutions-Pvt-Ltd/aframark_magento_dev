@@ -19,6 +19,7 @@ class AfterProduct implements ObserverInterface
     protected $_afra;
     private $_storeManager;
     public $_category;
+    protected $helperblock;
 /**
  * @param \Magento\Framework\HTTP\Client\Curl $curl
  */
@@ -30,7 +31,8 @@ class AfterProduct implements ObserverInterface
             \Magento\Store\Model\StoreManagerInterface $storeManager,
             \Magento\Catalog\Model\Category $category,
             \Magento\Framework\View\Layout $layout,
-            \Magento\Framework\UrlInterface $frontUrlModel
+            \Magento\Framework\UrlInterface $frontUrlModel,
+            \Axtrics\Aframark\Block\Data $helperBlock
             )
             {
             $this->layout = $layout;
@@ -41,7 +43,10 @@ class AfterProduct implements ObserverInterface
             $this->_storeManager = $storeManager;
             $this->_category = $category;
             $this->frontUrlModel = $frontUrlModel;
+            $this->helperblock = $helperBlock;
+
             }
+           
     public function execute(Observer $observer)
     {
     	try{
@@ -57,10 +62,10 @@ class AfterProduct implements ObserverInterface
         }
         
   		$product=$this->productRepository->getById($param->getId());
+  		$app_data=$this->_afra->getCollection()->getFirstItem();
         $routeParams['id'] = $product->getId();
         $routeParams['s'] = $product->getUrlKey();
         $producturl=$this->frontUrlModel->getUrl('catalog/product/view', $routeParams);
-  		$app_data=$this->_afra->getCollection()->getFirstItem();
   		 if ($app_data['upc_attribute_code']!=null) {
                             $upc=$app_data['upc_attribute_code'];
                         }
@@ -113,26 +118,24 @@ class AfterProduct implements ObserverInterface
                         'ean'=>$product[$ean],
                         'isbn'=>$product[$isbn],
                         'price'=> $product->getPrice(),
-                        'url'=> $product->getUrlInStore(),
+                        'url'=> $producturl,
 
                    );
 
   		 $responsedata=array( 'action' => $action,'status' => 200,  'merchant_code'=>$app_data['merchant_code'],
                     'products' => $product_collections);
-  	
-    	$url="http://sandbox.aframark.com/webhook/magento";
-    	
+  		
+       
+    	$url=$this->helperblock->getAfraUrl();
     	$this->_curl->post($url, $responsedata);
-    	
     	$response = $this->_curl->getBody();
 
     	
     }
     catch(\Exception $e){
-        $this->logger->critical($e->getMessage());
+$this->logger->critical($e->getMessage());
     
     }
-
 			return ; 
         
     }

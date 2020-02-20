@@ -10,13 +10,15 @@ class OrderSuccess implements ObserverInterface
     protected $_order;
     protected $_customer;
     protected $_curl;
+    protected $_configurable;
     public function __construct(
         \Magento\Sales\Api\Data\OrderInterface $order,
         \Magento\Directory\Model\CountryFactory $countryFactory,
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Magento\Customer\Model\Customer $customer,
         \Magento\Framework\HTTP\Client\Curl $curl,
-        \Axtrics\Aframark\Model\Aframark $afra
+        \Axtrics\Aframark\Model\Aframark $afra,
+        \Magento\ConfigurableProduct\Model\Product\Type\Configurable $configurable
     ) {
         $this->_order = $order; 
         $this->_countryFactory = $countryFactory;   
@@ -24,6 +26,7 @@ class OrderSuccess implements ObserverInterface
         $this->_afra = $afra;
         $this->_customer = $customer;
         $this->_curl = $curl;
+        $this->_configurable = $configurable;
     }
 
     /**
@@ -51,7 +54,7 @@ class OrderSuccess implements ObserverInterface
     $customer  = $this->_customer->load($orders->getCustomerId());
     $firstname = $customer->getDefaultBillingAddress()->getFirstname();
     $lastname  = $customer->getDefaultBillingAddress()->getLastname();
-    echo $customer_name = $firstname.' '.$lastname ."<--------   exist customer";
+  $customer_name = $firstname.' '.$lastname;
 }
                     $countryCode = $deta['country_id'];
                     // print_r($countryCode);
@@ -65,7 +68,18 @@ class OrderSuccess implements ObserverInterface
                            $store = $this->_objectManager->get('Magento\Store\Model\StoreManagerInterface')->getStore();
                                 $producturl=$getproduct->getProductUrl();
                             $productImageUrl = $store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product' . $getproduct->getImage();
-
+                                 $parentIds = $this->_configurable->getParentIdsByChild($listitems['product_id']);
+                         $parentId = array_shift($parentIds);
+                         
+                         if($parentId){
+                         $parentrepository=$this->_objectManager->create('Magento\Catalog\Model\Product')->load($parentId);
+                         $parentsku="";
+                         $parentsku=$parentrepository->getSku();
+                         }
+                         else
+                         {
+                             $parentsku="null";
+                         }
                             if ($app_data['upc_attribute_code']!=null) {
                             $upc=$app_data['upc_attribute_code'];
                         }
@@ -94,13 +108,14 @@ class OrderSuccess implements ObserverInterface
                         {
                             $isbn="Null";
                         }
-                            $items[]=array('id'=>$listitems['item_id'],'title'=>$getproduct['name'],'image'=>$productImageUrl,'sku'=>$listitems['sku'],'upc'=>$getproduct[$upc],'ean'=>$getproduct[$ean],'mpn'=>$getproduct[$mpn],'isbn'=>$getproduct[$isbn],'url'=>$producturl);
+                            $items[]=array('id'=>$listitems['item_id'],'title'=>$getproduct['name'],'image'=>$productImageUrl,'parent_sku'=>$parentsku!="null"?$parentsku:$listitems['sku'],'sku'=>$listitems['sku'],'upc'=>$getproduct[$upc],'ean'=>$getproduct[$ean],'mpn'=>$getproduct[$mpn],'isbn'=>$getproduct[$isbn],'url'=>$producturl);
                         }
         $dataa[]=array('id' => $orders['entity_id'],'created_at'=>$orders['created_at'],'customer'=>array('email'=>$orders['customer_email'],'first_name'=>$firstname,'last_name'=>$lastname,'country'=>$country),'line_items' =>$items);
                     }
                        
                         $responsedata=array( 'status' => 200,'action'=>'NewOrder','merchant_code'=>$app_data['merchant_code'],
                     'orders' => $dataa);
+                      
                         $url="http://sandbox.aframark.com/webhook/magento";
         
         $this->_curl->post($url, $responsedata);
