@@ -44,6 +44,13 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     [],
                     'Secret Key'
                 )
+		->addColumn(
+                    'merchant_code',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    '255',
+                    [],
+                    'Merchant Code'
+                )
                 ->addColumn(
                     'store_token',
                     \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
