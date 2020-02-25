@@ -275,25 +275,31 @@ class AframarkManagement implements AframarkApiInterface {
         //Get customers count
         public function countCustomer()
         {
+
             $data =$this->request->getPostValue();
             $model = $this->_objectManager->create('Axtrics\Aframark\Model\Aframark');
             $app_data=$model->getCollection()->getFirstItem();
             $app_data_update = $model->load($app_data['app_id']);
             $objDate = $this->_objectManager->create('Magento\Framework\Stdlib\DateTime\DateTime');
             $date = $objDate->gmtDate();
+            $fromDate = date('Y-m-d H:i:s', strtotime('-2 month'));
+            $toDate = $date;
+            $orders= $this->order->getCollection() 
+            ->setOrder('entity_id','DESC')
+            ->addAttributeToFilter('created_at', array(
+                                'from' => $fromDate,
+                                'to' => $toDate,
+                                'date' => true,
+                                ));   
             $response=array();  
              if ($data) 
                 {
                 if ($app_data['store_token']==$data['token'])
                 {
-                    $customer=$this->_customer->getCollection()
-                       ->addAttributeToSelect("*")
-                       ->load();
-                       $customercount= $customer->count();
                     $app_data_update->setData("last_connection_response_on",$date);
                     $app_data_update->save();
                     $response[]=array( 'status' => 200,
-                    'count' => $customercount); 
+                    'count' => count($orders)); 
                 }
                 else
                 {
@@ -322,14 +328,19 @@ class AframarkManagement implements AframarkApiInterface {
             
             $objDate = $this->_objectManager->create('Magento\Framework\Stdlib\DateTime\DateTime');
             $date = $objDate->gmtDate();
-
+            $fromDate = date('Y-m-d H:i:s', strtotime('-2 month'));
+            $toDate = $date;
             $response=array();
             $orders= $this->order->getCollection();  
-            $orders=$orders->setOrder('entity_id','DESC');
+            $orders=$orders->setOrder('entity_id','DESC')
+             ->addAttributeToFilter('created_at', array(
+                                'from' => $fromDate,
+                                'to' => $toDate,
+                                'date' => true,
+                                ));   
             $orders=$orders->setPageSize($params['limit']);
             $orders=$orders->setCurPage($params['offset']);
-                    // print_r($orders->getData());
-                    //        die;
+                  
 
             if ($params) 
             {
@@ -340,7 +351,7 @@ class AframarkManagement implements AframarkApiInterface {
                 foreach ($orders as $orderdata) 
                     {
                     $orders= $this->order->load($orderdata['entity_id']);
-                    $orderItems = $orders->getAllItems();
+                    $orderItems = $orders->getAllVisibleItems();
                     $deta = $orderdata->getShippingAddress()->getData();
                     $countryCode = $deta['country_id'];
                     $country = $this->_countryFactory->create()->loadByCode($countryCode);
@@ -349,10 +360,11 @@ class AframarkManagement implements AframarkApiInterface {
                         foreach ($orderItems as $listitems) 
                         {
                         $getproduct = $this->_objectManager->create('Magento\Catalog\Model\Product')->load($listitems['product_id']);
+
                            $store = $this->_objectManager->get('Magento\Store\Model\StoreManagerInterface')->getStore();
                                 $producturl=$getproduct->getProductUrl();
                             $productImageUrl = $store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product' . $getproduct->getImage();
-
+                
                             if ($app_data['upc_attribute_code']!=null) {
                             $upc=$app_data['upc_attribute_code'];
                         }
@@ -381,11 +393,12 @@ class AframarkManagement implements AframarkApiInterface {
                         {
                             $isbn="Null";
                         }
-                            $items[]=array('id'=>$listitems['item_id'],'title'=>$getproduct['name'],'image'=>$productImageUrl,'sku'=>$listitems['sku'],'upc'=>$getproduct[$upc],'ean'=>$getproduct[$ean],'mpn'=>$getproduct[$mpn],'isbn'=>$getproduct[$isbn],'url'=>$producturl);
+                            $items[]=array('id'=>$listitems['item_id'],'title'=>$getproduct['name'],'image'=>$productImageUrl,'parent_sku'=>$getproduct->getSku(),'sku'=>$listitems['sku'],'upc'=>$getproduct[$upc],'ean'=>$getproduct[$ean],'mpn'=>$getproduct[$mpn],'isbn'=>$getproduct[$isbn],'url'=>$producturl);
                         }
+                        
         $dataa[]=array('id' => $orderdata['entity_id'],'created_at'=>$orderdata['created_at'],'customer'=>array('email'=>$orderdata['customer_email'],'first_name'=>$orderdata['customer_firstname'],'last_name'=>$orderdata['customer_lastname'],'country'=>$country),'line_items' =>$items);
                     }
-                       
+                   
                         $response[]=array( 'status' => 200,
                     'orders' => $dataa);
                         $app_data_update->setData("last_connection_response_on",$date);
