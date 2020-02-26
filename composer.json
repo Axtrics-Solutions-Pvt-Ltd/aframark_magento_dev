@@ -2,7 +2,7 @@
     "name": "aframark/module-qa",
     "description": "Display FAQs for your store catalogue.",
     "type": "magento2-module",
-    "version": "v1.0.3"
+    "version": "v1.0.5"
     "license": [
       "OSL-3.0"
     ],
