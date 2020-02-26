@@ -4,10 +4,17 @@
         <referenceBlock name="product.info.details">
           <block class="Magento\Catalog\Block\Product\View\Attributes" name="questions.tab" as="questionstab" template="Axtrics_Aframark::product_question.phtml" group="detailed_info"  >
              <arguments>
-                <argument translate="true" name="title" xsi:type="string">Product Question</argument>
+                <argument translate="true" name="title" xsi:type="string">Customer Questions &#38; Answers</argument>
                 <argument name="sort_order" xsi:type="string">35</argument>
              </arguments>
           </block>
         </referenceBlock>
+        <referenceContainer name="product.info.main">
+
+      <block class="Magento\Framework\View\Element\Template" name="product.customer.review" after="product.info.stock.re"
+template="Axtrics_Aframark::product_review.phtml">
+      </block>
+  </referenceContainer>
+       
     </body>
 </page>
