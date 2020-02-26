@@ -29,7 +29,7 @@ class UPC implements \Magento\Framework\Option\ArrayInterface
     public function toOptionArray()
     {
     	$entityTypeId='4';
-    	$attribute_key[]=['value' => '', 'label' => __('Select One')];
+    	$attribute_key[]=['value' => '0', 'label' => __('Select One')];
 
     	$collection = $this->attribute->getCollection()
     	->addFieldToFilter('entity_type_id', ['eq' => $entityTypeId]);
@@ -50,6 +50,6 @@ class UPC implements \Magento\Framework\Option\ArrayInterface
      */
     public function toArray()
     {
-        return ['value' => '', 'label' => __('Select One')];
+        return ['value' => '0', 'label' => __('Select One')];
     }
 }
