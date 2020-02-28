@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<head>
+		<css src="Axtrics_Aframark::css/customer-review.css" />
+	</head>
     <body>      
         <referenceBlock name="product.info.details">
           <block class="Magento\Catalog\Block\Product\View\Attributes" name="questions.tab" as="questionstab" template="Axtrics_Aframark::product_question.phtml" group="detailed_info"  >
@@ -9,12 +12,16 @@
              </arguments>
           </block>
         </referenceBlock>
-        <referenceContainer name="product.info.main">
 
-      <block class="Magento\Framework\View\Element\Template" name="product.customer.review" after="product.info.stock.re"
-template="Axtrics_Aframark::product_review.phtml">
+ 	<referenceContainer name="product.info.price">
+         <container name="customer-review-container" as="customer-review-container" htmlTag="div" htmlClass="customer-review"/>
+     </referenceContainer>
+        <referenceContainer name="customer-review-container">
+
+      <block class="Magento\Framework\View\Element\Template" name="product.customer.review" 
+template="Axtrics_Aframark::product_review.phtml" before="-">
       </block>
   </referenceContainer>
-       
+
     </body>
 </page>
