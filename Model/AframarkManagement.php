@@ -25,7 +25,7 @@ class AframarkManagement implements AframarkApiInterface {
     protected $_customer;
     protected $order;
     private $_storeManager;
-    protected $_coreSession;
+    protected $address;
     public function __construct(
         RequestInterface $request,
         \Magento\Catalog\Api\ProductRepositoryInterface $productRepository,
@@ -40,7 +40,7 @@ class AframarkManagement implements AframarkApiInterface {
         \Magento\Customer\Model\ResourceModel\Customer\CollectionFactory $customerFactory,
         \Magento\Customer\Model\Customer $customers,
         \Magento\Directory\Model\CountryFactory $countryFactory,
-        \Magento\Framework\Session\SessionManagerInterface $coreSession,
+        \Magento\Customer\Api\AddressRepositoryInterface $address,
         \Psr\Log\LoggerInterface $logger
     ) {
         $this->request = $request;
@@ -57,7 +57,6 @@ class AframarkManagement implements AframarkApiInterface {
         $this->productVisibility = $productVisibility;
         $this->_storeManager = $storeManager;
         $this->_countryFactory = $countryFactory;
-        $this->_coreSession = $coreSession;
     }
 
     /**
@@ -357,6 +356,19 @@ class AframarkManagement implements AframarkApiInterface {
                     $country = $this->_countryFactory->create()->loadByCode($countryCode);
                     $country=$country->getName();
                         $items=array();
+                    if($orders->getCustomerId() === NULL)
+                        {
+
+                        $firstname = $orders->getBillingAddress()->getFirstname();
+                        $lastname = $orders->getBillingAddress()->getLastname();
+                        }
+                    else
+                        {
+                        $customer  = $this->_customer->load($orders->getCustomerId());
+                    
+                        $firstname=$customer->getFirstname();
+                        $lastname  = $customer->getLastname();
+                        }
                         foreach ($orderItems as $listitems) 
                         {
                         $getproduct = $this->_objectManager->create('Magento\Catalog\Model\Product')->load($listitems['product_id']);
@@ -396,7 +408,7 @@ class AframarkManagement implements AframarkApiInterface {
                             $items[]=array('id'=>$listitems['item_id'],'title'=>$getproduct['name'],'image'=>$productImageUrl,'parent_sku'=>$getproduct->getSku(),'sku'=>$listitems['sku'],'upc'=>$getproduct[$upc],'ean'=>$getproduct[$ean],'mpn'=>$getproduct[$mpn],'isbn'=>$getproduct[$isbn],'url'=>$producturl);
                         }
                         
-        $dataa[]=array('id' => $orderdata['entity_id'],'created_at'=>$orderdata['created_at'],'customer'=>array('email'=>$orderdata['customer_email'],'first_name'=>$orderdata['customer_firstname'],'last_name'=>$orderdata['customer_lastname'],'country'=>$country),'line_items' =>$items);
+        $dataa[]=array('id' => $orderdata['entity_id'],'created_at'=>$orderdata['created_at'],'customer'=>array('email'=>$orderdata['customer_email'],'first_name'=>$firstname,'last_name'=>$lastname,'country'=>$country),'line_items' =>$items);
                     }
                    
                         $response[]=array( 'status' => 200,

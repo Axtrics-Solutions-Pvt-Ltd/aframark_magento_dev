@@ -41,14 +41,14 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
                ->addColumn(
                     'merchant_code',
                     \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-                    '255',
+                    255,
                     [],
                     'Merchant Code'
                 )
                 ->addColumn(
                     'store_token',
                     \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-                    '255',
+                    255,
                     [],
                     'Store Token'
                 )
@@ -126,10 +126,10 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
                 $installer->getTable('aframark_settings'),
                 $setup->getIdxName(
                     $installer->getTable('aframark_settings'),
-                    ['app_key','secret_key','store_token','upc_attribute_code','mpn_attribute_code','isbn_attribute_code','ean_attribute_code','version'],
+                    ['app_key','secret_key','merchant_code','store_token','upc_attribute_code','mpn_attribute_code','isbn_attribute_code','ean_attribute_code','version'],
                     \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_FULLTEXT
                 ),
-                ['app_key','secret_key','store_token','upc_attribute_code','ean_attribute_code','mpn_attribute_code','isbn_attribute_code','version'],
+                ['app_key','secret_key','merchant_code','store_token','upc_attribute_code','ean_attribute_code','mpn_attribute_code','isbn_attribute_code','version'],
                 \Magento\Framework\DB\Adapter\AdapterInterface::INDEX_TYPE_FULLTEXT
             );
         }
