@@ -1,4 +1,4 @@
-# The official Aframark extension for Magento 2
+# The official Aframark extension for Magento 2 (Sandbox)
 
 Aframark is an open review platform that helps consumers make better choices while helping companies showcase and improve their customer service.
 
