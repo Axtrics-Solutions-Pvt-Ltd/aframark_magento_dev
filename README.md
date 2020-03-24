@@ -19,7 +19,7 @@ php bin/magento maintenance:enable
 
 4. Download and install the Aframark plugin using Composer.
 ```
-composer require aframark/module-qa
+composer require aframark/module-qa-sandbox
 ```
 
 5. If this is the first time you install a plugin using Composer, Magento will ask you to provide your Magento Marketplace account credentials. To find your account information go to (https://marketplace.magento.com) > My profile > Access Keys > Create A New Access Key. Note: Your public key is your username, while your private key is your password. 
