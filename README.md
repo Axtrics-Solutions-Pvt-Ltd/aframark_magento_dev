@@ -1,5 +1,9 @@
 # The official Aframark extension for Magento 2 (Sandbox)
 
+Please note that this is the sandbox version of the app and if you are looking for the production version then kindly use the following link:
+https://github.com/axtricssolutions/aframark_magento
+
+
 Aframark is an open review platform that helps consumers make better choices while helping companies showcase and improve their customer service.
 
 To install the Aframark plugin on your website, please follow the steps provided in this package.
