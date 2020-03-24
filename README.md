@@ -1,4 +1,4 @@
-# The official Aframark extension for Magento 2 (Sandbox)
+# (Sandbox) The official Aframark extension for Magento 2
 
 Please note that this is the sandbox version of the app and if you are looking for the production version then kindly use this link:
 https://github.com/axtricssolutions/aframark_magento
