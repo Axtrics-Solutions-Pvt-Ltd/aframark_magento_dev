@@ -60,12 +60,13 @@ class AfterProduct implements ObserverInterface
         {
             $action="Updated";
         }
-        
+        $storeId = $this->_storeManager->getDefaultStoreView()->getStoreId();
   		$product=$this->productRepository->getById($param->getId());
   		$app_data=$this->_afra->getCollection()->getFirstItem();
         $routeParams['id'] = $product->getId();
         $routeParams['s'] = $product->getUrlKey();
-        $producturl=$this->frontUrlModel->getUrl('catalog/product/view', $routeParams);
+        $producturl=$this->frontUrlModel->getUrl('catalog/product/view',[ '_scope' => $storeId
+            ,'id'=>$routeParams['id'],'s'=>$routeParams['s'], '_nosid' => true ]);
   		 if ($app_data['upc_attribute_code']!=null) {
                             $upc=$app_data['upc_attribute_code'];
                         }
@@ -124,7 +125,7 @@ class AfterProduct implements ObserverInterface
 
   		 $responsedata=array( 'action' => $action,'status' => 200,  'merchant_code'=>$app_data['merchant_code'],
                     'products' => $product_collections);
-  		
+        
        
     	$url=$this->helperblock->getAfraUrl();
     	$this->_curl->post($url, $responsedata);
