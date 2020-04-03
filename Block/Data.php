@@ -10,7 +10,7 @@ class Data extends \Magento\Framework\View\Element\Template
 
 	public function getAfraUrl()
 	{
-		$url="http://sandbox.aframark.com/webhook/magento";
+		$url="https://sandbox.aframark.com/webhook/magento";
 		return $url;
 	}
 }
