@@ -11,6 +11,7 @@ class OrderSuccess implements ObserverInterface
     protected $_customer;
     protected $_curl;
     protected $_configurable;
+    protected $helperblock;
     public function __construct(
         \Magento\Sales\Api\Data\OrderInterface $order,
         \Magento\Directory\Model\CountryFactory $countryFactory,
@@ -18,6 +19,7 @@ class OrderSuccess implements ObserverInterface
         \Magento\Customer\Model\Customer $customer,
         \Magento\Framework\HTTP\Client\Curl $curl,
         \Axtrics\Aframark\Model\Aframark $afra,
+        \Axtrics\Aframark\Block\Data $helperBlock,
         \Magento\ConfigurableProduct\Model\Product\Type\Configurable $configurable
     ) {
         $this->_order = $order; 
@@ -26,7 +28,9 @@ class OrderSuccess implements ObserverInterface
         $this->_afra = $afra;
         $this->_customer = $customer;
         $this->_curl = $curl;
+         $this->helperblock = $helperBlock;
         $this->_configurable = $configurable;
+
     }
 
     /**
@@ -116,15 +120,16 @@ class OrderSuccess implements ObserverInterface
                         $responsedata=array( 'status' => 200,'action'=>'NewOrder','merchant_code'=>$app_data['merchant_code'],
                     'orders' => $dataa);
                       
-                        $url="http://sandbox.aframark.com/webhook/magento";
+        $url=$this->helperblock->getAfraUrl();
         
         $this->_curl->post($url, $responsedata);
         
         $response = $this->_curl->getBody();
+        
         }
          catch(\Exception $e){
 
-die("errro");
+$this->logger->critical($e->getMessage());
         
     }
     }
