@@ -114,7 +114,7 @@ class OrderSuccess implements ObserverInterface
                         }
                             $items[]=array('id'=>$listitems['item_id'],'title'=>$getproduct['name'],'image'=>$productImageUrl,'parent_sku'=>$parentsku!="null"?$parentsku:$listitems['sku'],'sku'=>$listitems['sku'],'upc'=>$getproduct[$upc],'ean'=>$getproduct[$ean],'mpn'=>$getproduct[$mpn],'isbn'=>$getproduct[$isbn],'url'=>$producturl);
                         }
-        $dataa[]=array('id' => $orders['entity_id'],'created_at'=>$orders['created_at'],'customer'=>array('email'=>$orders['customer_email'],'first_name'=>$firstname,'last_name'=>$lastname,'country'=>$country),'line_items' =>$items);
+        $dataa[]=array('id' => $orders->getIncrementId(),'created_at'=>$orders['created_at'],'customer'=>array('email'=>$orders['customer_email'],'first_name'=>$firstname,'last_name'=>$lastname,'country'=>$country),'line_items' =>$items);
                     }
                        
                         $responsedata=array( 'status' => 200,'action'=>'NewOrder','merchant_code'=>$app_data['merchant_code'],

@@ -274,7 +274,6 @@ class AframarkManagement implements AframarkApiInterface {
         //Get customers count
         public function countCustomer()
         {
-
             $data =$this->request->getPostValue();
             $model = $this->_objectManager->create('Axtrics\Aframark\Model\Aframark');
             $app_data=$model->getCollection()->getFirstItem();
@@ -408,7 +407,7 @@ class AframarkManagement implements AframarkApiInterface {
                             $items[]=array('id'=>$listitems['item_id'],'title'=>$getproduct['name'],'image'=>$productImageUrl,'parent_sku'=>$getproduct->getSku(),'sku'=>$listitems['sku'],'upc'=>$getproduct[$upc],'ean'=>$getproduct[$ean],'mpn'=>$getproduct[$mpn],'isbn'=>$getproduct[$isbn],'url'=>$producturl);
                         }
                         
-        $dataa[]=array('id' => $orderdata['entity_id'],'created_at'=>$orderdata['created_at'],'customer'=>array('email'=>$orderdata['customer_email'],'first_name'=>$firstname,'last_name'=>$lastname,'country'=>$country),'line_items' =>$items);
+        $dataa[]=array('id' => $orderdata->getIncrementId(),'created_at'=>$orderdata['created_at'],'customer'=>array('email'=>$orderdata['customer_email'],'first_name'=>$firstname,'last_name'=>$lastname,'country'=>$country),'line_items' =>$items);
                     }
                    
                         $response[]=array( 'status' => 200,
