@@ -12,6 +12,14 @@ class OrderSuccess implements ObserverInterface
     protected $_curl;
     protected $_configurable;
     protected $helperblock;
+     /**
+     * @var Logger
+     */
+    protected $logger;
+
+    /**
+     * @param Logger $logger
+     */
     public function __construct(
         \Magento\Sales\Api\Data\OrderInterface $order,
         \Magento\Directory\Model\CountryFactory $countryFactory,
@@ -20,6 +28,7 @@ class OrderSuccess implements ObserverInterface
         \Magento\Framework\HTTP\Client\Curl $curl,
         \Axtrics\Aframark\Model\Aframark $afra,
         \Axtrics\Aframark\Block\Data $helperBlock,
+        \Psr\Log\LoggerInterface $logger,
         \Magento\ConfigurableProduct\Model\Product\Type\Configurable $configurable
     ) {
         $this->_order = $order; 
@@ -28,7 +37,8 @@ class OrderSuccess implements ObserverInterface
         $this->_afra = $afra;
         $this->_customer = $customer;
         $this->_curl = $curl;
-         $this->helperblock = $helperBlock;
+        $this->helperblock = $helperBlock;
+        $this->logger = $logger;
         $this->_configurable = $configurable;
 
     }
@@ -61,8 +71,6 @@ class OrderSuccess implements ObserverInterface
   $customer_name = $firstname.' '.$lastname;
 }
                     $countryCode = $deta['country_id'];
-                    // print_r($countryCode);
-                    // die("sddd");
                     $country = $this->_countryFactory->create()->loadByCode($countryCode);
                     $country=$country->getName();
                         $items=array();
@@ -129,7 +137,7 @@ class OrderSuccess implements ObserverInterface
         }
          catch(\Exception $e){
 
-$this->logger->critical($e->getMessage());
+$this->logger->critical('Error message', ['exception' => $e]);
         
     }
     }
