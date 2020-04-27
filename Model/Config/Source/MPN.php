@@ -30,8 +30,6 @@ class MPN implements \Magento\Framework\Option\ArrayInterface
         $attribute_key[]=['value' => '0', 'label' => __('Select One')];
         $collection = $this->attribute->getCollection()
         ->addFieldToFilter('entity_type_id', ['eq' => $entityTypeId]);
-       // $collection->addFieldToFilter('attribute_code', array('like' => '%mpn%'));
-
         $attributes = $collection->toArray();
         foreach ($attributes['items'] as $key => $value) {
             $attribute_key[]=['value' => $value['attribute_code'], 'label' => __($value['attribute_code'])];
