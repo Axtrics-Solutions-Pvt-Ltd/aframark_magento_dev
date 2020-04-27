@@ -4,7 +4,7 @@ use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 /**
- * Class AfterSave
+ * Class AfterDeleteProduct
  * @package Axtrics\Aframark\Observer
  */
 class AfterDeleteProduct implements ObserverInterface
@@ -19,6 +19,14 @@ class AfterDeleteProduct implements ObserverInterface
     private $_storeManager;
     public $_category;
     protected $helperblock;
+     /**
+     * @var Logger
+     */
+    protected $logger;
+
+    /**
+     * @param Logger $logger
+     */
 /**
  * @param \Magento\Framework\HTTP\Client\Curl $curl
  */
@@ -30,6 +38,7 @@ class AfterDeleteProduct implements ObserverInterface
             \Magento\Store\Model\StoreManagerInterface $storeManager,
             \Magento\Catalog\Model\Category $category,
             \Magento\Framework\View\Layout $layout,
+            \Psr\Log\LoggerInterface $logger,
             \Axtrics\Aframark\Block\Data $helperBlock
             )
             {
@@ -41,6 +50,7 @@ class AfterDeleteProduct implements ObserverInterface
             $this->_storeManager = $storeManager;
             $this->_category = $category;
             $this->helperblock = $helperBlock;
+            $this->logger = $logger;
             }
     
     public function execute(Observer $observer)
@@ -54,52 +64,7 @@ class AfterDeleteProduct implements ObserverInterface
         $logger = new \Zend\Log\Logger();
         $logger->addWriter($writer);
         $logger->info($_sku);
-
-  		 // if ($app_data['upc_attribute_code']!=null) {
-     //                        $upc=$app_data['upc_attribute_code'];
-     //                    }
-     //                    else
-     //                    {
-     //                        $upc="Null";
-     //                    }
-     //                    if ($app_data['ean_attribute_code']!=null) {
-     //                        $ean=$app_data['ean_attribute_code'];
-     //                    }
-     //                    else
-     //                    {
-     //                        $ean="Null";
-     //                    }
-     //                    if ($app_data['mpn_attribute_code']!=null) {
-     //                        $mpn=$app_data['mpn_attribute_code'];
-     //                    }
-     //                    else
-     //                    {
-     //                        $mpn="Null";
-     //                    }
-     //                    if ($app_data['isbn_attribute_code']!=null) {
-     //                        $isbn=$app_data['isbn_attribute_code'];
-     //                    }
-     //                    else
-     //                    {
-     //                        $isbn="Null";
-     //                    }
-
-                        // $image_url = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA).'catalog/product'.$product->getImage();
-       //                  $cats=$param->getCategoryIds();
-       //                  $categorys=array();
-
-       //                  if(count($cats) )
-       //                 	 {
-				   //      	foreach ($cats as $cat) 
-				   //      		{
-				            
-				   //           $_category =  $this->_category->load($cat);
-				   //           $categorys[]= $_category->getName();
-				   
-				   //      		}
-						 // }
-
-  		 $product_collections=array(
+  		$product_collections=array(
                         'id'=>$param->getId(),
                         'sku'=>$param->getSku(),
                    );
@@ -116,7 +81,7 @@ class AfterDeleteProduct implements ObserverInterface
     }
     catch(\Exception $e){
 $product = false;
-$this->logger->critical($e->getMessage());
+$this->logger->critical('Error message', ['exception' => $e]);
     	
     }
       
