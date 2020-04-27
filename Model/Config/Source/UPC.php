@@ -33,8 +33,6 @@ class UPC implements \Magento\Framework\Option\ArrayInterface
 
     	$collection = $this->attribute->getCollection()
     	->addFieldToFilter('entity_type_id', ['eq' => $entityTypeId]);
-    	//$collection->addFieldToFilter('attribute_code', array('like' => '%upc%'));
-
     	$attributes = $collection->toArray();
     	foreach ($attributes['items'] as $key => $value) {
     		$attribute_key[]=['value' => $value['attribute_code'], 'label' => __($value['attribute_code'])];
