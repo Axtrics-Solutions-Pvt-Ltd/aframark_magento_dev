@@ -11,6 +11,15 @@ class OrderSuccess implements ObserverInterface
     protected $_customer;
     protected $_curl;
     protected $_configurable;
+    protected $helperblock;
+     /**
+     * @var Logger
+     */
+    protected $logger;
+
+    /**
+     * @param Logger $logger
+     */
     public function __construct(
         \Magento\Sales\Api\Data\OrderInterface $order,
         \Magento\Directory\Model\CountryFactory $countryFactory,
@@ -18,6 +27,8 @@ class OrderSuccess implements ObserverInterface
         \Magento\Customer\Model\Customer $customer,
         \Magento\Framework\HTTP\Client\Curl $curl,
         \Axtrics\Aframark\Model\Aframark $afra,
+        \Axtrics\Aframark\Block\Data $helperBlock,
+        \Psr\Log\LoggerInterface $logger,
         \Magento\ConfigurableProduct\Model\Product\Type\Configurable $configurable
     ) {
         $this->_order = $order; 
@@ -26,7 +37,10 @@ class OrderSuccess implements ObserverInterface
         $this->_afra = $afra;
         $this->_customer = $customer;
         $this->_curl = $curl;
+        $this->helperblock = $helperBlock;
+        $this->logger = $logger;
         $this->_configurable = $configurable;
+
     }
 
     /**
@@ -57,8 +71,6 @@ class OrderSuccess implements ObserverInterface
   $customer_name = $firstname.' '.$lastname;
 }
                     $countryCode = $deta['country_id'];
-                    // print_r($countryCode);
-                    // die("sddd");
                     $country = $this->_countryFactory->create()->loadByCode($countryCode);
                     $country=$country->getName();
                         $items=array();
@@ -110,21 +122,22 @@ class OrderSuccess implements ObserverInterface
                         }
                             $items[]=array('id'=>$listitems['item_id'],'title'=>$getproduct['name'],'image'=>$productImageUrl,'parent_sku'=>$parentsku!="null"?$parentsku:$listitems['sku'],'sku'=>$listitems['sku'],'upc'=>$getproduct[$upc],'ean'=>$getproduct[$ean],'mpn'=>$getproduct[$mpn],'isbn'=>$getproduct[$isbn],'url'=>$producturl);
                         }
-        $dataa[]=array('id' => $orders['entity_id'],'created_at'=>$orders['created_at'],'customer'=>array('email'=>$orders['customer_email'],'first_name'=>$firstname,'last_name'=>$lastname,'country'=>$country),'line_items' =>$items);
+        $dataa[]=array('id' => $orders->getIncrementId(),'created_at'=>$orders['created_at'],'customer'=>array('email'=>$orders['customer_email'],'first_name'=>$firstname,'last_name'=>$lastname,'country'=>$country),'line_items' =>$items);
                     }
                        
                         $responsedata=array( 'status' => 200,'action'=>'NewOrder','merchant_code'=>$app_data['merchant_code'],
                     'orders' => $dataa);
                       
-                        $url="http://sandbox.aframark.com/webhook/magento";
+        $url=$this->helperblock->getAfraUrl();
         
         $this->_curl->post($url, $responsedata);
         
         $response = $this->_curl->getBody();
+        
         }
          catch(\Exception $e){
 
-die("errro");
+$this->logger->critical('Error message', ['exception' => $e]);
         
     }
     }
