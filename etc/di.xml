@@ -10,18 +10,5 @@
         <argument name="frontUrlModel" xsi:type="object" shared="false">Magento\Framework\Url</argument>
     </arguments>
 </type>
-    <!-- <preference for="Magento\Backend\Model\Url" type="Axtrics\Aframark\Model\Url" />
-    <type name="Axtrics\Aframark\Model\Url">
-        <arguments>
-            <argument name="scopeResolver" xsi:type="object">Magento\Backend\Model\Url\ScopeResolver</argument>
-            <argument name="authSession" xsi:type="object">Magento\Backend\Model\Auth\Session\Proxy</argument>
-            <argument name="formKey" xsi:type="object">Magento\Framework\Data\Form\FormKey\Proxy</argument>
-            <argument name="scopeType" xsi:type="const">Magento\Store\Model\ScopeInterface::SCOPE_STORE</argument>
-            <argument name="backendHelper" xsi:type="object">Magento\Backend\Helper\Data\Proxy</argument>
-        </arguments>
-    </type>
-    <preference for="Magento\Framework\Session\SidResolverInterface" type="Magento\Framework\Session\SidResolver\Proxy" />
-     <preference for="Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Uploader\OpenDialogUrl" type="Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Uploader\OpenDialogUrl\Proxy" />
-     <preference for="Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Uploader\SaveUrl" type="Magento\PageBuilder\Model\Config\ContentType\AdditionalData\Provider\Uploader\SaveUrl\Proxy" /> -->
 
 </config>
