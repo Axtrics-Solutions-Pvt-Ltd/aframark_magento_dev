@@ -5,13 +5,6 @@
                 	 <display_text>Aframark</display_text>
                    <enable>1</enable>
                 </general>
-                <!-- <Gtm_mapping>
-                	<upc_code>1</upc_code>
-                	<ean_code>1</ean_code>
-                	<mpn_code>1</mpn_code>
-                	<isbn_code>1</isbn_code>
-                </Gtm_mapping> -->
-               
            </Axtrics_Aframark_config>
 
     </default>
