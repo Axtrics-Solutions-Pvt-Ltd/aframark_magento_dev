@@ -32,8 +32,6 @@ class ConfigPlugin
         \Closure $proceed
     ) {
     	$data =$this->request->getPostValue();
-    	// print_r($data['groups']['connection_setting']['fields']['app_key']['value']);
-     //    die("Sss");
     	$model = $this->_objectManager->create('Axtrics\Aframark\Model\Aframark');
         $app_data=$model->getCollection()->getFirstItem();
        
