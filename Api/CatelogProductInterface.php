@@ -52,14 +52,5 @@ interface CatelogProductInterface
      */
     //get the customers collection
     public function customerCollection();
-    /**
-     * Get the custom events item array.
-     *
-     * @api
-     * @param mixed $data
-     * @return boolean
-     */
-    //get the custom events 
-    public function customEvents($param);
     
 }
