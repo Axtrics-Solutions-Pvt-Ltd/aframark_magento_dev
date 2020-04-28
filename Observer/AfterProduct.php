@@ -19,6 +19,14 @@ class AfterProduct implements ObserverInterface
     protected $_afra;
     private $_storeManager;
     public $_category;
+     /**
+     * @var Logger
+     */
+    protected $logger;
+
+    /**
+     * @param Logger $logger
+     */
     protected $helperblock;
 /**
  * @param \Magento\Framework\HTTP\Client\Curl $curl
@@ -32,6 +40,7 @@ class AfterProduct implements ObserverInterface
             \Magento\Catalog\Model\Category $category,
             \Magento\Framework\View\Layout $layout,
             \Magento\Framework\UrlInterface $frontUrlModel,
+            \Psr\Log\LoggerInterface $logger,
             \Axtrics\Aframark\Block\Data $helperBlock
             )
             {
@@ -43,6 +52,7 @@ class AfterProduct implements ObserverInterface
             $this->_storeManager = $storeManager;
             $this->_category = $category;
             $this->frontUrlModel = $frontUrlModel;
+            $this->logger = $logger;
             $this->helperblock = $helperBlock;
 
             }
@@ -134,7 +144,7 @@ class AfterProduct implements ObserverInterface
     	
     }
     catch(\Exception $e){
-$this->logger->critical($e->getMessage());
+$this->logger->critical('Error message', ['exception' => $e]);
     
     }
 			return ; 
