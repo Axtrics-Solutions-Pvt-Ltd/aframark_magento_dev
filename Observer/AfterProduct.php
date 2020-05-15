@@ -105,7 +105,17 @@ class AfterProduct implements ObserverInterface
                         {
                             $isbn="Null";
                         }
+                        $url=$product->getImage();
+                        $url = substr($url,-4);
+                        if ($url=='.tmp') {
+                        $newurl=$product->getImage();
+                        $newurl=substr($newurl, 0, -4);
+                        $image_url = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA).'catalog/product'.$newurl;
+                        }
+                        else
+                        {
                         $image_url = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA).'catalog/product'.$product->getImage();
+                        }
                         $cats=$product->getCategoryIds();
                         $categorys=array();
                         if(count($cats) )
