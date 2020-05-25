@@ -6,13 +6,23 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 class ConfigPlugin
 {
 
-	/**
+     /**
      * Request instance
      *
      * @var \Magento\Framework\App\RequestInterface
      */
     protected $request;
+
+    /**
+     *
+     * @var objectmanager
+     */
     protected $_objectManager;
+
+    /**
+     *
+     * @var configwriter
+     */
     protected $configWriter;
 
     public function __construct(RequestInterface $request,
@@ -26,18 +36,19 @@ class ConfigPlugin
     }
 
 
-    //Configration save after Plugin
+    /**
+     * Config save after plugin
+     */
     public function aroundSave(
         \Magento\Config\Model\Config $subject,
         \Closure $proceed
     ) {
     	$data =$this->request->getPostValue();
-    	// print_r($data['groups']['connection_setting']['fields']['app_key']['value']);
-     //    die("Sss");
     	$model = $this->_objectManager->create('Axtrics\Aframark\Model\Aframark');
         $app_data=$model->getCollection()->getFirstItem();
        
     	if(isset($data['config_state']['Axtrics_Aframark_config_general'])){
+            if ($data['groups']['general']['fields']['enabled']['value'] == 1) {
     		$upc_code='';
             $ean_code='';
             $mpn_code='';
@@ -92,7 +103,10 @@ class ConfigPlugin
     		  $model->setData($appdata);
     		  $model->save();
                 }
-    		
+    	 else
+    {
+        $data="";
+    }	
     	}
         return $proceed();
     }
