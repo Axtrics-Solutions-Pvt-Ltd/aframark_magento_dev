@@ -23,7 +23,6 @@ class ConfigObserver implements ObserverInterface
 
     public function execute(EventObserver $observer)
     {
-        //$this->logger->info($observer->getWebsite());
-        //$this->logger->info($observer->getStore());
+
     }
 }
