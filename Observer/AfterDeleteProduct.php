@@ -2,7 +2,6 @@
 namespace Axtrics\Aframark\Observer;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
-use Magento\Catalog\Api\ProductRepositoryInterface;
 /**
  * Class AfterDeleteProduct
  * @package Axtrics\Aframark\Observer
@@ -13,11 +12,21 @@ class AfterDeleteProduct implements ObserverInterface
      * @param Observer $observer
      *
      */
+
+    /**
+     * @var curl
+     */
     protected $_curl;
-    protected $productRepository; 
+
+    /**
+     * Aframark model data
+     * @var afra
+     */
     protected $_afra;
-    private $_storeManager;
-    public $_category;
+
+    /**
+     * @var helperblock
+     */
     protected $helperblock;
      /**
      * @var Logger
@@ -27,28 +36,18 @@ class AfterDeleteProduct implements ObserverInterface
     /**
      * @param Logger $logger
      */
-/**
- * @param \Magento\Framework\HTTP\Client\Curl $curl
- */
+    /**
+     * @param \Magento\Framework\HTTP\Client\Curl $curl
+     */
             public function __construct(
-            \Axtrics\Aframark\Model\AframarkManagement $aframodel,
             \Magento\Framework\HTTP\Client\Curl $curl,
-            ProductRepositoryInterface $productRepository,
             \Axtrics\Aframark\Model\Aframark $afra,
-            \Magento\Store\Model\StoreManagerInterface $storeManager,
-            \Magento\Catalog\Model\Category $category,
-            \Magento\Framework\View\Layout $layout,
             \Psr\Log\LoggerInterface $logger,
             \Axtrics\Aframark\Block\Data $helperBlock
             )
             {
-            $this->layout = $layout;
             $this->_curl = $curl;
-            $this->_aframodel = $aframodel;
             $this->_afra = $afra;
-            $this->productRepository = $productRepository;
-            $this->_storeManager = $storeManager;
-            $this->_category = $category;
             $this->helperblock = $helperBlock;
             $this->logger = $logger;
             }
