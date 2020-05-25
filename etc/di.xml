@@ -1,14 +1,27 @@
 <?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2020 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<!--Plugin for config save-->
     <type name="Magento\Config\Model\Config">
         <plugin name="admin_system_config_save_plugin" type="Axtrics\Aframark\Plugin\ConfigPlugin" sortOrder="1"/>
     </type> 
+	<!--Plugin for config save-->
 
+	<!--Catalog API preference End-->
     <preference for="Axtrics\Aframark\Api\CatelogProductInterface" type="Axtrics\Aframark\Model\AframarkManagement"/>
+    <!--Catalog API preference End-->
+
+    <!-- Frontend url model object -->
     <type name="Axtrics\Aframark\Observer\AfterProduct"> 
     <arguments>
         <argument name="frontUrlModel" xsi:type="object" shared="false">Magento\Framework\Url</argument>
     </arguments>
-</type>
+	</type>
+    <!-- Frontend url model object -->
 
 </config>
