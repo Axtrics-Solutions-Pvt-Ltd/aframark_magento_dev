@@ -1,4 +1,7 @@
 <?php
+/**
+ * Copyright © 2020 Aframark . All rights reserved.
+ */
 namespace Axtrics\Aframark\Block;
 class Data extends \Magento\Framework\View\Element\Template	
 {
@@ -8,9 +11,13 @@ class Data extends \Magento\Framework\View\Element\Template
 		parent::__construct($context);
 	}
 
+	/**
+	 * Function for getting aframark url
+	 * @return string
+	 */
 	public function getAfraUrl()
 	{
-		$url="https://sandbox.aframark.com/webhook/magento";
+		$url="https://my.aframark.com/webhook/magento";
 		return $url;
 	}
 }
