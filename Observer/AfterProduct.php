@@ -14,10 +14,31 @@ class AfterProduct implements ObserverInterface
      * @param Observer $observer
      *
      */
+
+    /**
+     * @var curl
+     */
     protected $_curl;
+
+    /**
+     * @var productrepository
+     */
     protected $productRepository; 
+
+    /**
+     * Aframark Model
+     * @var afra
+     */
     protected $_afra;
+
+    /**
+     * @var storemanager
+     */
     private $_storeManager;
+
+    /**
+     * @var category
+     */
     public $_category;
      /**
      * @var Logger
@@ -28,6 +49,7 @@ class AfterProduct implements ObserverInterface
      * @param Logger $logger
      */
     protected $helperblock;
+
 /**
  * @param \Magento\Framework\HTTP\Client\Curl $curl
  */
@@ -105,7 +127,7 @@ class AfterProduct implements ObserverInterface
                         {
                             $isbn="Null";
                         }
-                        $url=$product->getImage();
+                         $url=$product->getImage();
                         $url = substr($url,-4);
                         if ($url=='.tmp') {
                         $newurl=$product->getImage();
