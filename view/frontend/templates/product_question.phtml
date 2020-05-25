@@ -1,10 +1,9 @@
 <script type="text/javascript" async="" src="https://sandbox.aframark.com/js/Widgets/WidgetQA.js?ver=0.2.9"></script>
 <?php 
-    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-    $product = $objectManager->get('Magento\Framework\Registry')->registry('current_product');//get current product
-    $model = $objectManager->create('Axtrics\Aframark\Model\Aframark');
-        $app_data=$model->getCollection()->getFirstItem();
-       $token = substr(md5(microtime()),rand(0,26),5);
+    $product = $block->getCurrentProduct();
+    $model = $block->getAfraModel();
+    $app_data=$model->getCollection()->getFirstItem();
+    $token = substr(md5(microtime()),rand(0,26),5);
 
 ?>
 <div id="aframark-container" data-ak-api-token='<?php echo $token.$app_data['store_token'] ?>' data-ak-merchant-code='<?php echo $app_data['merchant_code'] ?>' data-ak-sku='<?php echo $product->getSku(); ?>'></div>
