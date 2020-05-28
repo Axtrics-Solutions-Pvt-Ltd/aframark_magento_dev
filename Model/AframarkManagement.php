@@ -178,7 +178,7 @@ class AframarkManagement implements AframarkApiInterface {
             $response=array();
             $data =$this->request->getPostValue();
             $collection = $this->productCollection->create();
-            $collection=$collection->load();
+            $collection->addAttributeToFilter('status',\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
             $count= $collection->count();
             $app_data_update->setData("last_connection_response_on",$date);
             $app_data_update->save();
@@ -221,6 +221,7 @@ class AframarkManagement implements AframarkApiInterface {
                 if ($app_data['store_token']==$data['token'])
                 {
                     $collection = $this->productCollection->create();
+                    $collection->addAttributeToFilter('status',\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
                     $collection=$collection->load();
                     $collection=$collection->setPageSize($params['limit']);
                     $collection=$collection->setCurPage($params['offset']);
