@@ -11,8 +11,8 @@
           </block>
         </referenceBlock>
 
- 	<referenceContainer name="product.info.price">
-         <container name="customer-review-container" as="customer-review-container" htmlTag="div" htmlClass="customer-question-micro"/>
+ 	<referenceContainer name="product.info.main">
+         <container name="customer-review-container" as="customer-review-container" htmlTag="div" htmlClass="customer-question-micro" before="product.info.addto"/>
      </referenceContainer>
         <referenceContainer name="customer-review-container">
 
