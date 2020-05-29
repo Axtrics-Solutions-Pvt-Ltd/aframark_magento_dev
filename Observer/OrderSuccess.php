@@ -3,19 +3,58 @@ namespace Axtrics\Aframark\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\App\Request\DataPersistorInterface;
-use Magento\Framework\App\ObjectManager;
-
+/**
+ * Class OrderSuccess
+ * @package Axtrics\Aframark\Observer
+ */
 class OrderSuccess implements ObserverInterface
 {
+    /**
+     * @var Order
+    */
     protected $_order;
+
+    /**
+     * @var countryfactory
+    */
+    protected $_countryFactory;
+
+    /**
+     * @var Customer
+     */
     protected $_customer;
+
+    /**
+     * Aframark model
+     * @var afra
+     */
+    protected $_afra;
+
+    /**
+     * @var curl
+     */
     protected $_curl;
+
+    /**
+     * @var configurable
+     */
     protected $_configurable;
+  
+    /**
+     * @var helperblock
+     */
     protected $helperblock;
+
      /**
      * @var Logger
      */
     protected $logger;
+
+     /**
+     * @var objectmanager
+     */
+    protected $_objectManager;
+
 
     /**
      * @param Logger $logger
