@@ -1,11 +1,12 @@
-<script type="text/javascript" async="" src="https://sandbox.aframark.com/js/Widgets/WidgetQAMicro.js?ver=0.2.9">
-</script>
 <?php 
     $product = $block->getCurrentProduct();
     $model = $block->getAfraModel();
     $app_data=$model->getCollection()->getFirstItem();
     $token = substr(md5(microtime()),rand(0,26),5);
-
 ?>
+<?php if(!empty($app_data->getData())): ?>
+<script type="text/javascript" async="" src="https://sandbox.aframark.com/js/Widgets/WidgetQAMicro.js?ver=0.2.9">
+</script>
 <div id="aframark-container-micro" data-ak-merchant-code='<?php echo $app_data['merchant_code'] ?>'
 data-ak-api-token='<?php echo $token.$app_data['store_token'] ?>' data-ak-sku='<?php echo $product->getSku(); ?>'> </div>
+<?php endif; ?>
