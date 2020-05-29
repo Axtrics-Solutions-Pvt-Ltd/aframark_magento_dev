@@ -1,56 +1,48 @@
 <?php
-namespace Axtrics\Aframark\Api;
- 
 /**
+ * Contributor company: Axtrics Solutions Pvt. Ltd.
+ * Contributor Author : Shubham Kumar
+ */
+namespace Axtrics\Aframark\Api;
+/**
+ * Interface CatelogProductInterface
  * @api
- * @since 101.0.0
  */
 interface CatelogProductInterface
 {
     /**
-     * Updates the specified products in item array.
+     * Return Generated Token.
      *
-     * @api
-     * @param mixed $data
-     * @return boolean
+     * @return array
      */
-    //authorization and token generation
     public function tokenGeneration();
+
 	/**
-     * Updates the specified products list item array.
+     * Return All Product Collection.
      *
-     * @api
-     * @param mixed $data
-     * @return boolean
+     * @return array
      */
-    //counts the number of products
     public function getCollection();
+
     /**
-     * Updates the specified products count item array.
+     * Return Count of Product Collection.
      *
-     * @api
-     * @param mixed $data
-     * @return boolean
+     * @return count
      */
-    //counts the number of products
     public function countProduct();
-    /**
-     * Get the specified customer count item array.
+
+     /**
+     * Return Customer Count.
      *
-     * @api
-     * @param mixed $data
-     * @return boolean
+     * @return count
      */
-    //counts the number of customers
     public function countCustomer();
-    /**
-     * Get the customer collection item array.
+
+     /**
+     * Return Customer Collection.
      *
-     * @api
-     * @param mixed $data
-     * @return boolean
+     * @return array
      */
-    //get the customers collection
     public function customerCollection();
     
 }
