@@ -1,11 +1,9 @@
 <?xml version="1.0"?>
 <page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-	<head>
-		<css src="Axtrics_Aframark::css/customer-question.css" />
-	</head>
+	
     <body>      
         <referenceBlock name="product.info.details">
-          <block class="Magento\Catalog\Block\Product\View\Attributes" name="questions.tab" as="questionstab" template="Axtrics_Aframark::product_question.phtml" group="detailed_info"  >
+          <block class="Axtrics\Aframark\Block\Questiontab" name="questions.tab" as="questionstab" template="Axtrics_Aframark::product_question.phtml" group="detailed_info"  >
              <arguments>
                 <argument translate="true" name="title" xsi:type="string">Customer Questions &#38; Answers</argument>
                 <argument name="sort_order" xsi:type="string">35</argument>
@@ -18,7 +16,7 @@
      </referenceContainer>
         <referenceContainer name="customer-review-container">
 
-      <block class="Magento\Framework\View\Element\Template" name="product.customer.review" 
+      <block class="Axtrics\Aframark\Block\Questiontab" name="product.customer.review" 
 template="Axtrics_Aframark::product_review.phtml" before="-">
       </block>
   </referenceContainer>
