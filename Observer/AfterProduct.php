@@ -14,10 +14,31 @@ class AfterProduct implements ObserverInterface
      * @param Observer $observer
      *
      */
+
+    /**
+     * @var curl
+     */
     protected $_curl;
+
+    /**
+     * @var productrepository
+     */
     protected $productRepository; 
+
+    /**
+     * Aframark Model
+     * @var afra
+     */
     protected $_afra;
+
+    /**
+     * @var storemanager
+     */
     private $_storeManager;
+
+    /**
+     * @var category
+     */
     public $_category;
      /**
      * @var Logger
@@ -28,6 +49,7 @@ class AfterProduct implements ObserverInterface
      * @param Logger $logger
      */
     protected $helperblock;
+
 /**
  * @param \Magento\Framework\HTTP\Client\Curl $curl
  */
@@ -142,8 +164,8 @@ class AfterProduct implements ObserverInterface
                         'url'=> $producturl,
 
                    );
-
-  		 $responsedata=array( 'action' => $action,'status' => 200,  'merchant_code'=>$app_data['merchant_code'],
+	$status=$product->getStatus()==1?'enabled':'disabled';		
+  	$responsedata=array( 'action' => $action,'status' => $status,  'merchant_code'=>$app_data['merchant_code'],
                     'products' => $product_collections);
         
        
