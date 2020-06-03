@@ -1,79 +1,110 @@
 <?php
+/**
+ * Contributor company: Axtrics Solution Pvt Ltd.
+ * Contributor Author : Shubham Kumar
+ */
 namespace Axtrics\Aframark\Model;
 
 use Axtrics\Aframark\Api\CatelogProductInterface as AframarkApiInterface;
 use Magento\Framework\App\RequestInterface;
+/**
+ * Defines the implementaiton class of the Various api calls
+ */
 class AframarkManagement implements AframarkApiInterface {
 
     /**
      * @param \Magento\Catalog\Api\ProductRepositoryInterface $productRepository
      */
+
     /**
      * Request instance
      *
      * @var \Magento\Framework\App\RequestInterface
      */
+
     protected $request;
-    /*
-    * Json response set variable declare
-    */
-    protected $resultJsonFactory;
-    /*
-    * Product collection variable declare
-    */
+
+    /**
+     * @var productCollectionFactory
+     */
     protected $productCollection;
+
+    /**
+     * Customer Model
+     * @var customers
+     */
     protected $_customer;
+
+    /**
+     * Order Model
+     * @var order
+     */
     protected $order;
+
+    /**
+     * Store Manager Interface
+     * @var storeManager
+     */
     private $_storeManager;
-    protected $address;
+
+    /**
+     * ObjectManagerInterface
+     * @var objectmanager
+     */
+    protected $_objectManager;
+
+    /**
+     * Country Factory
+     * @var objectmanager
+     */
+    protected $_countryFactory;
+
+    /**
+     * Logger
+     * @var logger
+     */
+    protected $logger;
+
+    /**
+     * Customer Factory
+     * @var customerfactory
+     */
+    protected $_customerFactory;
+
     public function __construct(
         RequestInterface $request,
         \Magento\Catalog\Api\ProductRepositoryInterface $productRepository,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Magento\Framework\ObjectManagerInterface $objectManager,
-         \Magento\Store\Model\StoreManagerInterface $storeManager,
-          \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $orderCollectionFactory,
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory,
-         \Magento\Catalog\Model\Product\Attribute\Source\Status $productStatus,
-        \Magento\Catalog\Model\Product\Visibility $productVisibility,
         \Magento\Sales\Model\Order $order,
         \Magento\Customer\Model\ResourceModel\Customer\CollectionFactory $customerFactory,
         \Magento\Customer\Model\Customer $customers,
         \Magento\Directory\Model\CountryFactory $countryFactory,
-        \Magento\Customer\Api\AddressRepositoryInterface $address,
         \Psr\Log\LoggerInterface $logger
     ) {
         $this->request = $request;
         $this->productRepository = $productRepository;
         $this->productCollection = $productCollectionFactory;
-        $this->resultJsonFactory = $resultJsonFactory;
         $this->_objectManager = $objectManager;
         $this->logger = $logger;
         $this->_customer = $customers;
         $this->_customerFactory = $customerFactory;
-        $this->_orderCollectionFactory = $orderCollectionFactory;
         $this->order = $order;
-        $this->productStatus = $productStatus;
-        $this->productVisibility = $productVisibility;
         $this->_storeManager = $storeManager;
         $this->_countryFactory = $countryFactory;
     }
 
-    /**
-     * Updates the specified product from the request payload.
-     *
-     * @api
-     * @param mixed $products
-     * @return boolean
-     */
-    //Token Generation
+   /**
+     * Get Generated token and app data
+     * @return array
+     */  
     public function tokenGeneration()
     {
         $data =$this->request->getPostValue();
         $model = $this->_objectManager->create('Axtrics\Aframark\Model\Aframark');
         $app_data=$model->getCollection()->getFirstItem();
         $app_data_update = $model->load($app_data['app_id']);
-        $resultJson = $this->resultJsonFactory->create();
         $objDate = $this->_objectManager->create('Magento\Framework\Stdlib\DateTime\DateTime');
         $date = $objDate->gmtDate();
         $response=array();
@@ -128,7 +159,10 @@ class AframarkManagement implements AframarkApiInterface {
         return $response;
     }
 
-        //Counts the number of products
+    /**
+     * Return Count of products
+     * @return array
+     */  
         public function countProduct()
         {
         $data =$this->request->getPostValue();
@@ -144,7 +178,7 @@ class AframarkManagement implements AframarkApiInterface {
             $response=array();
             $data =$this->request->getPostValue();
             $collection = $this->productCollection->create();
-            $collection=$collection->load();
+            $collection->addAttributeToFilter('status',\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
             $count= $collection->count();
             $app_data_update->setData("last_connection_response_on",$date);
             $app_data_update->save();
@@ -166,7 +200,10 @@ class AframarkManagement implements AframarkApiInterface {
             return $response;
         }
 
-        //Get Collection According offset and limit
+    /**
+     * Get product collection
+     * @return array
+     */  
         public function getCollection()
         {
             $data =$this->request->getPostValue();
@@ -184,6 +221,7 @@ class AframarkManagement implements AframarkApiInterface {
                 if ($app_data['store_token']==$data['token'])
                 {
                     $collection = $this->productCollection->create();
+                    $collection->addAttributeToFilter('status',\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
                     $collection=$collection->load();
                     $collection=$collection->setPageSize($params['limit']);
                     $collection=$collection->setCurPage($params['offset']);
@@ -271,7 +309,13 @@ class AframarkManagement implements AframarkApiInterface {
 
            return $response;
         }
-        //Get customers count
+        
+
+
+    /**
+     * Get Customer count 
+     * @return array
+     */  
         public function countCustomer()
         {
             $data =$this->request->getPostValue();
@@ -313,7 +357,11 @@ class AframarkManagement implements AframarkApiInterface {
             
             return $response;
         }
-         //Get customers collection
+         
+    /**
+     * Get customer collection and order data
+     * @return array
+     */  
         public function customerCollection()
         {
             $data =$this->request->getPostValue();
@@ -436,11 +484,6 @@ class AframarkManagement implements AframarkApiInterface {
             return $response;
         }
 
-        /* Events to update data  */
-         public function customEvents($data)
-        {
-            print_r($data->getId());
-        }
     /* log for an API */
     public function writeLog($log)
     {
