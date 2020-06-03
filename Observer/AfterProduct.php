@@ -54,7 +54,6 @@ class AfterProduct implements ObserverInterface
  * @param \Magento\Framework\HTTP\Client\Curl $curl
  */
             public function __construct(
-            \Axtrics\Aframark\Model\AframarkManagement $aframodel,
             \Magento\Framework\HTTP\Client\Curl $curl,
             ProductRepositoryInterface $productRepository,
             \Axtrics\Aframark\Model\Aframark $afra,
@@ -68,7 +67,6 @@ class AfterProduct implements ObserverInterface
             {
             $this->layout = $layout;
             $this->_curl = $curl;
-            $this->_aframodel = $aframodel;
             $this->_afra = $afra;
             $this->productRepository = $productRepository;
             $this->_storeManager = $storeManager;
