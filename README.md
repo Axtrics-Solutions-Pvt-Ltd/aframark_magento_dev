@@ -1,7 +1,5 @@
 # The official Aframark extension for Magento 2
 
-Aframark is an open review platform that helps consumers make better choices while helping companies showcase and improve their customer service.
-
 To install the Aframark plugin on your website, please follow the steps provided in this package.
 
 ## How to install the Aframark extension
