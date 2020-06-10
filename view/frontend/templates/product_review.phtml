@@ -3,10 +3,45 @@
     $model = $block->getAfraModel();
     $app_data=$model->getCollection()->getFirstItem();
     $token = substr(md5(microtime()),rand(0,26),5);
+    $questiondata=$block->getAskQuestion($product,$app_data,$token);
 ?>
 <?php if(!empty($app_data->getData())): ?>
-<script type="text/javascript" async="" src="https://sandbox.aframark.com/js/Widgets/WidgetQAMicro.js?ver=0.2.9">
-</script>
-<div id="aframark-container-micro" data-ak-merchant-code='<?php echo $app_data['merchant_code'] ?>'
-data-ak-api-token='<?php echo $token.$app_data['store_token'] ?>' data-ak-sku='<?php echo $product->getSku(); ?>'> </div>
+<?php 
+       	
+       	if ($questiondata !='Not Authorized') {
+       	$questions = json_decode($questiondata);
+       	
+       	if ($questions != null) {
+       	?>
+        <div id="aframark-container-micro" >
+       		<img src="<?php echo $this->getViewFileUrl("Axtrics_Aframark::images/aframark-icon.svg"); ?>" width="16"><a id="question-tab" href="#tab-label-questionstab"><?php echo $questions->totalRecords.' answered questions';?></a>
+        </div>
+       	<?php
+       	}	
+       	else
+       	{
+		    ?>
+        <div id="aframark-container-micro" >
+       	<img src="<?php echo $this->getViewFileUrl("Axtrics_Aframark::images/aframark-icon.svg"); ?>" width="16"><a id="question-tab" href="#tab-label-questionstab">Ask a question</a>
+       </div> 
+ 		   <?php     	
+ 		     }
+       	}
+
+?>
 <?php endif; ?>
+<script type="text/javascript">
+        require([
+        'jquery'
+    ], function ($) {
+        'use strict';
+       
+            $("#question-tab").on("click" ,function(e) {
+           	e.preventDefault();
+             $('html, body').animate({
+                scrollTop: $("#tab-label-questionstab").offset().top
+              }, 1000);
+                $("#tab-label-questionstab").trigger( "click" );
+            });
+});
+</script>
