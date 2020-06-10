@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-	
+	 <head>
+          <css src="Axtrics_Aframark::css/customer-question.css" />
+     </head> 
     <body>      
         <referenceBlock name="product.info.details">
           <block class="Axtrics\Aframark\Block\Questiontab" name="questions.tab" as="questionstab" template="Axtrics_Aframark::product_question.phtml" group="detailed_info"  >
@@ -12,14 +14,15 @@
         </referenceBlock>
 
  	<referenceContainer name="product.info.main">
-         <container name="customer-review-container" as="customer-review-container" htmlTag="div" htmlClass="customer-question-micro" before="product.info.addto"/>
+         <container name="customer-review-container" as="customer-review-container" htmlTag="div" htmlClass="customer-question-micro"/>
      </referenceContainer>
         <referenceContainer name="customer-review-container">
 
       <block class="Axtrics\Aframark\Block\Questiontab" name="product.customer.review" 
-template="Axtrics_Aframark::product_review.phtml" before="-">
+template="Axtrics_Aframark::product_review.phtml" >
       </block>
   </referenceContainer>
+  <move element="customer-review-container" destination="product.info.main" after="page.main.title"/>
 
     </body>
 </page>
