@@ -3,11 +3,11 @@
     $model = $block->getAfraModel();
     $app_data=$model->getCollection()->getFirstItem();
     $token = substr(md5(microtime()),rand(0,26),5);
-    $questiondata=$block->getAskQuestion($product,$app_data,$token);
+    
 ?>
 <?php if(!empty($app_data->getData())): ?>
 <?php 
-       	
+       	$questiondata=$block->getAskQuestion($product,$app_data,$token);
        	if ($questiondata !='Not Authorized') {
        	$questions = json_decode($questiondata);
        	
