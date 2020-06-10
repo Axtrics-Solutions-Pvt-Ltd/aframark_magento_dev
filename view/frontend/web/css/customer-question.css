@@ -1,4 +1,11 @@
-.customer-question-micro
-{
-	display: table-caption !important;
+#aframark-container-micro {
+	display: flex;
+	align-items: center;
+	font-size: 14px;
+}
+#aframark-container-micro img {
+margin-right: 5px;
+}
+#question-tab {
+    text-decoration: none;
 }
