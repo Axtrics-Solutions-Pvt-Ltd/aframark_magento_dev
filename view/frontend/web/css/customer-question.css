@@ -2,6 +2,8 @@
 	display: flex;
 	align-items: center;
 	font-size: 14px;
+	padding-top: 10px;
+    padding-bottom: 10px;
 }
 #aframark-container-micro img {
 margin-right: 5px;
@@ -9,3 +11,4 @@ margin-right: 5px;
 #question-tab {
     text-decoration: none;
 }
+
