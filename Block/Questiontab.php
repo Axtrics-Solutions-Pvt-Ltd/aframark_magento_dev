@@ -58,7 +58,7 @@ class Questiontab extends \Magento\Framework\View\Element\Template
 	 */
     public function getAskQuestion($product,$appdata,$token)
     {
-    	$url="https://sandbox.aframark.com/api/allqa/".$appdata['merchant_code']."/".$product->getSku()."/".$_SERVER['HTTP_HOST']."?api_token=".$token.$appdata['store_token']."";
+    	$url="https://my.aframark.com/api/allqa/".$appdata['merchant_code']."/".$product->getSku()."/".$_SERVER['HTTP_HOST']."?api_token=".$token.$appdata['store_token']."";
 		$this->curl->get($url);
 		$result = $this->curl->getBody();
 		return $result;
