@@ -1,4 +1,7 @@
-# The official Aframark extension for Magento 2
+# (Sandbox) The official Aframark extension for Magento 2
+
+Please note that this is the sandbox version of the app and if you are looking for the production version then kindly use this link:
+https://github.com/axtricssolutions/aframark_magento
 
 To install the Aframark plugin on your website, please follow the steps provided in this package.
 
@@ -17,7 +20,7 @@ php bin/magento maintenance:enable
 
 4. Download and install the Aframark plugin using Composer.
 ```
-composer require aframark/module-qa
+composer require aframark/module-qa-sandbox
 ```
 
 5. If this is the first time you install a plugin using Composer, Magento will ask you to provide your Magento Marketplace account credentials. To find your account information go to (https://marketplace.magento.com) > My profile > Access Keys > Create A New Access Key. Note: Your public key is your username, while your private key is your password. 
