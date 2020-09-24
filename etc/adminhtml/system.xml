@@ -20,6 +20,25 @@
             </group>
             <group id="connection_setting" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="1">
                 <label>Connection Settings</label>
+                 <field id="mode" translate="label" type="select" sortOrder="15" showInDefault="1" showInWebsite="0" showInStore="0" >
+                    <label>Mode</label>
+                    <source_model>Axtrics\Aframark\Model\Config\Source\mode</source_model>
+                    <comment>Select Mode</comment>
+                </field>
+                 <field id="display_widget" translate="label" type="select" sortOrder="16" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Display Widget</label>
+                    <source_model>Axtrics\Aframark\Model\Config\Source\Yesno</source_model>
+                    <comment>Display Widget</comment>
+                </field>
+                 <field id="developer_ip" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0" >
+                    <label> Developer IPs</label>
+             <!--         <backend_model>Axtrics\Aframark\Model\Config\Backend\AppKey</backend_model> -->
+                    <comment>Enter developer ips with comma separated</comment>
+                    <depends>
+                    <field id="Axtrics_Aframark_config/connection_setting/display_widget">0</field>
+                </depends>
+                </field>
+
                 <field id="app_key" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0" >
                     <label>App key</label>
                     <validate>required-entry validate-length minimum-length-32 maximum-length-32</validate>
