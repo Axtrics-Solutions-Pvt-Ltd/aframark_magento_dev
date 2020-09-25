@@ -64,6 +64,7 @@ class AframarkManagement implements AframarkApiInterface {
      * @var logger
      */
     protected $logger;
+    protected $_scopeConfig;
 
     /**
      * Customer Factory
@@ -81,6 +82,7 @@ class AframarkManagement implements AframarkApiInterface {
         \Magento\Customer\Model\ResourceModel\Customer\CollectionFactory $customerFactory,
         \Magento\Customer\Model\Customer $customers,
         \Magento\Directory\Model\CountryFactory $countryFactory,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Psr\Log\LoggerInterface $logger
     ) {
         $this->request = $request;
@@ -92,6 +94,7 @@ class AframarkManagement implements AframarkApiInterface {
         $this->_customerFactory = $customerFactory;
         $this->order = $order;
         $this->_storeManager = $storeManager;
+        $this->scopeConfig = $scopeConfig;
         $this->_countryFactory = $countryFactory;
     }
 
@@ -101,6 +104,14 @@ class AframarkManagement implements AframarkApiInterface {
      */  
     public function tokenGeneration()
     {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+        $mode= $this->scopeConfig->getValue('Axtrics_Aframark_config/connection_setting/mode', $storeScope);
+        if(!$mode){
+            $mode='Test';
+        }
+        else{
+             $mode='Live';
+        }
         $data =$this->request->getPostValue();
         $model = $this->_objectManager->create('Axtrics\Aframark\Model\Aframark');
         $app_data=$model->getCollection()->getFirstItem();
@@ -108,6 +119,7 @@ class AframarkManagement implements AframarkApiInterface {
         $objDate = $this->_objectManager->create('Magento\Framework\Stdlib\DateTime\DateTime');
         $date = $objDate->gmtDate();
         $response=array();
+        $app_data["mode"]=$mode;
         if($data)
         {
 
