@@ -106,11 +106,15 @@ class AframarkManagement implements AframarkApiInterface {
     {
         $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
         $mode= $this->scopeConfig->getValue('Axtrics_Aframark_config/connection_setting/mode', $storeScope);
-        if(!$mode){
-            $mode='Test';
+        if($mode=='1'){
+            $mode='Live';
+           
+        }
+        elseif($mode=='2'){
+            $mode='Developer';
         }
         else{
-             $mode='Live';
+            $mode='Live';
         }
         $data =$this->request->getPostValue();
         $model = $this->_objectManager->create('Axtrics\Aframark\Model\Aframark');

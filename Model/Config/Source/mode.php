@@ -14,7 +14,7 @@ class mode implements \Magento\Framework\Option\ArrayInterface
      */
     public function toOptionArray()
     {
-        return [['value' => 1, 'label' => __('Live')], ['value' => 0, 'label' => __('Test')]];
+        return [['value' => 1, 'label' => __('Live')], ['value' => 0, 'label' => __('Test')],['value' => 2, 'label' => __('Developer')]];
     }
 
     /**
@@ -24,6 +24,6 @@ class mode implements \Magento\Framework\Option\ArrayInterface
      */
     public function toArray()
     {
-        return [0 => __('Test'), 1 => __('Live')];
+        return [0 => __('Test'), 1 => __('Live'),2 => __('Developer')];
     }
 }

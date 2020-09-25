@@ -28,10 +28,13 @@ class Data extends \Magento\Framework\View\Element\Template
 	public function AframarkUrl(){
 		$storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
 		$mode= $this->scopeConfig->getValue('Axtrics_Aframark_config/connection_setting/mode', $storeScope);
-		if(!$mode){
-			$url="https://sandbox.aframark.com";
-		}else{
+		if($mode=='1'){
 			$url="https://my.aframark.com";
+		}
+		elseif($mode=='2'){
+			$url="https://dev.aframark.com";
+		}else{
+			$url="https://sandbox.aframark.com";
 		}
 		return $url;
 	}
