@@ -114,7 +114,7 @@ class AframarkManagement implements AframarkApiInterface {
             $mode='Developer';
         }
         else{
-            $mode='Live';
+            $mode='Test';
         }
         $data =$this->request->getPostValue();
         $model = $this->_objectManager->create('Axtrics\Aframark\Model\Aframark');
