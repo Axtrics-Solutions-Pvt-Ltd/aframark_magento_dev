@@ -5,9 +5,12 @@
 namespace Axtrics\Aframark\Block;
 class Data extends \Magento\Framework\View\Element\Template	
 {
-	public function __construct(\Magento\Framework\View\Element\Template\Context $context
+	public function __construct(
+		\Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+	\Magento\Framework\View\Element\Template\Context $context
 	)
 	{
+		$this->scopeConfig = $scopeConfig;
 		parent::__construct($context);
 	}
 
@@ -17,7 +20,22 @@ class Data extends \Magento\Framework\View\Element\Template
 	 */
 	public function getAfraUrl()
 	{
-		$url="https://my.aframark.com/webhook/magento";
+		$seturl=$this->AframarkUrl();
+		$url=$seturl."/webhook/magento";
+		return $url;
+	}
+
+	public function AframarkUrl(){
+		$storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+		$mode= $this->scopeConfig->getValue('Axtrics_Aframark_config/connection_setting/mode', $storeScope);
+		if($mode=='1'){
+			$url="https://my.aframark.com";
+		}
+		elseif($mode=='2'){
+			$url="https://dev.aframark.com";
+		}else{
+			$url="https://sandbox.aframark.com";
+		}
 		return $url;
 	}
 }

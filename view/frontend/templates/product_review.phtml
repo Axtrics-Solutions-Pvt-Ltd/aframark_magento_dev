@@ -3,30 +3,40 @@
     $model = $block->getAfraModel();
     $app_data=$model->getCollection()->getFirstItem();
     $token = substr(md5(microtime()),rand(0,26),5);
-    
+    $widget= $block->getWiget();
+    $widgetips= $block->getwidgetips();
+    $widgetips=explode(",",$widgetips);
+    $matched=false;
+    //Ip Find
+    if (in_array($model->getUserip(), $widgetips)){
+        $matched= true;
+    }
+  
 ?>
-<?php if(!empty($app_data->getData())): ?>
+
+
+<?php if((!empty($app_data->getData()) )  && (($widget ==false && $matched==true) || $widget ==true) ): ?>
 <?php 
-       	$questiondata=$block->getAskQuestion($product,$app_data,$token);
-       	if ($questiondata !='Not Authorized') {
-       	$questions = json_decode($questiondata);
-       	
-       	if ($questions != null) {
-       	?>
+        $questiondata=$block->getAskQuestion($product,$app_data,$token);
+        if ($questiondata !='Not Authorized') {
+        $questions = json_decode($questiondata);
+        
+        if ($questions != null) {
+        ?>
         <div id="aframark-container-micro" >
-       		<img src="<?php echo $this->getViewFileUrl("Axtrics_Aframark::images/aframark-icon.svg"); ?>" width="16"><a id="question-tab" href="#tab-label-questionstab"><?php echo $questions->totalRecords.' answered questions';?></a>
+          <img src="<?php echo $this->getViewFileUrl("Axtrics_Aframark::images/aframark-icon.svg"); ?>" width="16"><a id="question-tab" href="#tab-label-questionstab"><?php echo $questions->totalRecords.' answered questions';?></a>
         </div>
-       	<?php
-       	}	
-       	else
-       	{
-		    ?>
-        <div id="aframark-container-micro" >
-       	<img src="<?php echo $this->getViewFileUrl("Axtrics_Aframark::images/aframark-icon.svg"); ?>" width="16"><a id="question-tab" href="#tab-label-questionstab">Ask a question</a>
+        <?php
+        } 
+        else
+        {
+        ?>
+        <div id="aframark-container-micro">
+        <img src="<?php echo $this->getViewFileUrl("Axtrics_Aframark::images/aframark-icon.svg"); ?>" width="16"><a id="question-tab" href="#tab-label-questionstab">Ask a question</a>
        </div> 
- 		   <?php     	
- 		     }
-       	}
+       <?php      
+         }
+        }
 
 ?>
 <?php endif; ?>
@@ -37,11 +47,12 @@
         'use strict';
        
             $("#question-tab").on("click" ,function(e) {
-           	e.preventDefault();
+            e.preventDefault();
              $('html, body').animate({
                 scrollTop: $("#tab-label-questionstab").offset().top
               }, 1000);
                 $("#tab-label-questionstab").trigger( "click" );
             });
+            
 });
 </script>

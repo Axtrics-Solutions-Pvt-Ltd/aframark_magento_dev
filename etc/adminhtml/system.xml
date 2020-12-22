@@ -20,17 +20,36 @@
             </group>
             <group id="connection_setting" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="1">
                 <label>Connection Settings</label>
+                 <field id="mode" translate="label" type="select" sortOrder="15" showInDefault="1" showInWebsite="0" showInStore="0" >
+                    <label>Mode</label>
+                    <source_model>Axtrics\Aframark\Model\Config\Source\mode</source_model>
+                    <comment>Select Mode</comment>
+                </field>
+                 <field id="display_widget" translate="label" type="select" sortOrder="16" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Display Widget</label>
+                    <source_model>Axtrics\Aframark\Model\Config\Source\Yesno</source_model>
+                    <comment>Hide or Unhide QA Widget</comment>
+                </field>
+                 <field id="developer_ip" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0" >
+                    <label> Developer IPs</label>
+             <!--         <backend_model>Axtrics\Aframark\Model\Config\Backend\AppKey</backend_model> -->
+                    <comment>Enter developer ips with comma separated</comment>
+                    <depends>
+                    <field id="Axtrics_Aframark_config/connection_setting/display_widget">0</field>
+                </depends>
+                </field>
+
                 <field id="app_key" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0" >
                     <label>App key</label>
                     <validate>required-entry validate-length minimum-length-32 maximum-length-32</validate>
              <!--         <backend_model>Axtrics\Aframark\Model\Config\Backend\AppKey</backend_model> -->
-                    <comment>You will find App key within your aframark control panel under store page.This is requires to connect your store.</comment>
-                </field>
+                    <comment>You will find App key within your aframark control panel under store page. This is required to connect your store</comment>
+                </field> 
                 <field id="secret_key" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0" >
                     <label>Secret key</label>
                     <validate>required-entry validate-length minimum-length-10 maximum-length-32</validate>
                     <!--  <backend_model>Axtrics\Aframark\Model\Config\Backend\Secretkey</backend_model> -->
-                    <comment>You will find Secret key within your aframark control panel under store page.This is requires to connect your store.</comment>
+                    <comment>You will find Secret key within your aframark control panel under store page. This is required to connect your store.</comment>
                 </field>
                 <depends>
                     <field id="Axtrics_Aframark_config/general/enabled">1</field>
@@ -43,12 +62,12 @@
                     <label>Do you have UPC code</label>
                     <source_model>Axtrics\Aframark\Model\Config\Source\Yesno</source_model>
                     <comment>Don't have Upc code then please select no </comment>
-                </field>
+                </field> 
                 <field id="aframark_upc" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>UPC</label>
                     <validate>required-entry</validate>
                     <source_model>Axtrics\Aframark\Model\Config\Source\UPC</source_model>
-                    <comment>Choose the correct attribute for the UPC mapping. If you don't have UPC codes for your products then kindly click the "Don't have UPC code" checkbox</comment>
+                    <comment> Choose the correct attribute for the UPC mapping. If you don't have UPC codes for your products then kindly select No in "Do you have UPC code"</comment>
                     <depends>
                         <field id="Axtrics_Aframark_config/Gtm_mapping/upc_code">1</field>
                     </depends>
@@ -62,7 +81,7 @@
                     <label>EAN</label>
                     <validate>required-entry</validate>
                     <source_model>Axtrics\Aframark\Model\Config\Source\EAN</source_model>
-                    <comment>Choose the correct attribute for the EAN mapping. If you don't have EAN codes for your products then kindly click the "Don't have EAN code" checkbox</comment>
+                    <comment>Choose the correct attribute for the EAN mapping. If you don't have EAN codes for your products then kindly select No in "Do you have EAN code"</comment>
                     <depends>
                         <field id="Axtrics_Aframark_config/Gtm_mapping/ean_code">1</field>
                     </depends>
@@ -76,7 +95,7 @@
                     <label>MPN</label>
                     <validate>required-entry</validate>
                     <source_model>Axtrics\Aframark\Model\Config\Source\MPN</source_model>
-                    <comment>Choose the correct attribute for the MPN mapping. If you don't have MPN codes for your products then kindly click the "Don't have MPN code" checkbox</comment>
+                    <comment>Choose the correct attribute for the MPN mapping. If you don't have MPN codes for your products then kindly select No in "Do you have MPN code"</comment>
                     <depends>
                         <field id="Axtrics_Aframark_config/Gtm_mapping/mpn_code">1</field>
                     </depends>
@@ -90,7 +109,7 @@
                     <label>ISBN</label>
                     <validate>required-entry</validate>
                     <source_model>Axtrics\Aframark\Model\Config\Source\ISBN</source_model>
-                    <comment>Choose the correct attribute for the ISBN mapping. If you don't have ISBN codes for your products then kindly click the "Don't have ISBN code" checkbox</comment>
+                    <comment>Choose the correct attribute for the ISBN mapping. If you don't have ISBN codes for your products then kindly select No in "Do you have ISBN code"</comment>
                     <depends>
                         <field id="Axtrics_Aframark_config/Gtm_mapping/isbn_code">1</field>
                     </depends>
@@ -99,6 +118,29 @@
                     <field id="Axtrics_Aframark_config/general/enabled">1</field>
                 </depends>
             </group>
+            <group id="cron_mapping" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="1">
+                <label>Cron schedule</label>
+                <comment>Comment</comment>
+                <field id="cronenabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Enables or disables Cron Schedule</comment>
+                </field>
+                 <depends>
+                    <field id="Axtrics_Aframark_config/general/enabled">1</field>
+                </depends>
+            </group>
+             <group id="cron_mapping_setting" translate="label"  sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="1">
+                <label>Setting</label>
+                 <field id="aframark_cron" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="0" showInStore="0">
+                 <label>Setting</label>
+                     <frontend_model>Axtrics\Aframark\Block\Adminhtml\System\Config\Cron</frontend_model> 
+                     <!-- <backend_model>Axtrics\Aframark\Model\Config\Backend\Cron</backend_model>  -->
+                </field>
+               <depends>
+                        <field id="Axtrics_Aframark_config/cron_mapping/cronenabled">1</field>
+                    </depends>
+                 </group>
         </section>
     </system>
 </config>
