@@ -44,7 +44,9 @@
                     <validate>required-entry validate-length minimum-length-32 maximum-length-32</validate>
              <!--         <backend_model>Axtrics\Aframark\Model\Config\Backend\AppKey</backend_model> -->
                     <comment>You will find App key within your aframark control panel under store page. This is required to connect your store</comment>
-                </field> 
+
+                </field>
+
                 <field id="secret_key" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0" >
                     <label>Secret key</label>
                     <validate>required-entry validate-length minimum-length-10 maximum-length-32</validate>
