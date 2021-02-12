@@ -156,7 +156,7 @@ class Observer
     }
                     $product_collections[]=array(
                             'id'=>$product['entity_id'],
-                            'title'=>$productData->getName()."Updated again".$i,
+                            'title'=>$productData->getName(),
                             'sku'=>$product['sku'],
                             'image'=>$image_url,
                             'category'=>$categorys,
