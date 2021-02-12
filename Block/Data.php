@@ -25,6 +25,28 @@ class Data extends \Magento\Framework\View\Element\Template
 		return $url;
 	}
 
+	/**
+	 * Function for getting cron aframark url
+	 * @return string
+	 */
+	public function getProductCronUrl()
+	{
+		$seturl=$this->AframarkUrl();
+		$cronurl=$seturl."/api/m2/products/list";
+		return $cronurl;
+	}
+
+	/**
+	 * Function for getting cron aframark url
+	 * @return string
+	 */
+	public function getProductCountCronUrl()
+	{
+		$seturl=$this->AframarkUrl();
+		$croncounturl=$seturl."/api/m2/products/count";
+		return $croncounturl;
+	}
+	
 	public function AframarkUrl(){
 		$storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
 		$mode= $this->scopeConfig->getValue('Axtrics_Aframark_config/connection_setting/mode', $storeScope);
