@@ -176,11 +176,15 @@ class Observer
                         $this->_curl->post($url, $responsedata);
                         $response = $this->_curl->getBody();
                         $responsearray=json_decode($response, TRUE);
-                        $this->_logger->info("Product Cron Sucess".$response);
-                        if (!empty($responsearray)) {
-                        if ($responsearray[0]['status'] == "200") 
+                        if ($responsearray == "Products limit reached as per subscribed plan.") 
                         {
-                        $this->_logger->info("Product Cron Sucess".$response);
+                        $this->_logger->info("Limit Reached ".$responsearray);
+                        break;
+                        }
+                        if (!empty($responsearray) && is_array($responsearray)) {
+                        if (array_key_exists("status",$responsearray) && $responsearray[0]['status'] == "200") 
+                        {
+                        $this->_logger->info("Product Cron Success".$response);
 
                         }
                         else
@@ -190,7 +194,7 @@ class Observer
                         }
                         else
                         {
-                        $this->_logger->info("Empty Response for sku".$product->getSku());
+                        $this->_logger->info("Empty Response or response doesn't contains array for sku".$product['sku']);
                         }
     
                     }
