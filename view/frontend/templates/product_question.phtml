@@ -7,46 +7,20 @@
     $widget= $block->getWiget();
     $widgetips= $block->getwidgetips();
     $widgetips=explode(",",$widgetips);
+    $widget=$block->getWiget();
     $matched=false;
-    //Ip Find
-
-        if (in_array($model->getUserip(), $widgetips)){
-
+    
+        if (in_array($block->getUserip(), $widgetips)){
+        // Match IP
         $matched= true;
     }
     
-  
 ?>
+
+<?php if($widget!='0' || $matched!=false): ?>   
+<!-- Disable/Enable widget Q/A -->         
 <?php if(!empty($app_data->getData())): ?>
 <script type="text/javascript" async="" src="<?php echo $url;?>/js/Widgets/WidgetQA.js?ver=0.2.9"></script>
 <div id="aframark-container" data-ak-api-token='<?php echo $token.$app_data['store_token'] ?>' data-ak-merchant-code='<?php echo $app_data['merchant_code'] ?>' data-ak-sku='<?php echo $product->getSku(); ?>'></div>
 <?php endif; ?>
-
-<script type="text/javascript">
-        require([
-        'jquery'
-    ], function ($) {
-        'use strict';
-       
-        $(document).ready(function(){
-            var widget="<?php echo $block->getWiget();?>";
-            var matched="<?php echo $matched;?>";
-            
-            if(widget==false){
-                
-                if(matched==false){
-                  
-                   $('ul li').each(function(index,value) {
-                    if($(this).find('a').attr('href')=='#questionstab'){
-                        $(this).hide();
-                    }
-                   //console.log("shintuuu",index,value.find('href'));
-                });
-                $("#questionstab").hide();
-            
-                }
-                
-            }
-        });
-});
-</script>
+<?php endif; ?>
