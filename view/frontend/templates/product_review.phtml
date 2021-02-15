@@ -7,15 +7,13 @@
     $widgetips= $block->getwidgetips();
     $widgetips=explode(",",$widgetips);
     $matched=false;
-    //Ip Find
-    if (in_array($model->getUserip(), $widgetips)){
+    if (in_array($block->getUserip(), $widgetips)){
         $matched= true;
     }
   
 ?>
-
-
-<?php if((!empty($app_data->getData()) )  && (($widget ==false && $matched==true) || $widget ==true) ): ?>
+<?php if($widget!='0' || $matched!=false): ?>   
+<?php if((!empty($app_data->getData()))): ?>
 <?php 
         $questiondata=$block->getAskQuestion($product,$app_data,$token);
         if ($questiondata !='Not Authorized') {
@@ -40,6 +38,7 @@
 
 ?>
 <?php endif; ?>
+
 <script type="text/javascript">
         require([
         'jquery'
@@ -56,3 +55,4 @@
             
 });
 </script>
+<?php endif; ?>
