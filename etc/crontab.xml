@@ -7,7 +7,7 @@
     <group id="aframark_cron">
         <job name="aframark_cron_import" instance="Axtrics\Aframark\Model\Observer"
              method="SyncProducts">
-            <schedule>*/50 * * * *</schedule>
+            <schedule>*/1 * * * *</schedule>
         </job>
     </group>
 </config>
