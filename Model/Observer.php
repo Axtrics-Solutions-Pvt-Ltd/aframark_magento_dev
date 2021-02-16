@@ -107,6 +107,7 @@ class Observer
 
                             $collection->setCurPage(1)->setPageSize($limit)->load();
                             $numberOfPages = $collection->getLastPageNumber();
+                            $productsize=0;
                             for ($i = 1; $i <= $numberOfPages; $i++) {
                                 $products =  $this->productCollection->create();
                                 $products->addAttributeToFilter('status', \Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
@@ -159,6 +160,7 @@ class Observer
 
                                     );
                                 }
+                                $productsize+= count($product_collections);
                                 $token = substr(md5(microtime()), rand(0, 26), 5);
                                 $responsedata = array('products' => $product_collections);
                                 $url = $this->helperblock->getProductCronUrl() . "?api_token=" . $token . $app_data['store_token'];
@@ -179,6 +181,10 @@ class Observer
                                     $this->_logger->info("Empty Response or response doesn't contains array for sku" . $product['sku']);
                                 }
                             }
+                                $time_end = microtime(true);
+                                $execution_time = ($time_end - $time_start) / 60;
+                                $msg = 'Total ' . $productsize . ' has been inserted in ' . $execution_time . ' Mins.';
+                                $this->_logger->info("Cron Batch Executed in" . $msg);
                         }
                     }
                 }
