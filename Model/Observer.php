@@ -59,6 +59,7 @@ class Observer
 
     public function SyncProducts(\Magento\Cron\Model\Schedule $schedule)
     {
+        $time_start = microtime(true);
         $this->_logger->notice("-------------------- CRON Started Running--------------------");
         try {
 
