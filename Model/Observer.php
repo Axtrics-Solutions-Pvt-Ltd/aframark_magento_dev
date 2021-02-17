@@ -161,7 +161,7 @@ class Observer
 
                                     );
                                 }
-                                $productsize+= count($product_collections);
+                                
                                 $token = substr(md5(microtime()), rand(0, 26), 5);
                                 $responsedata = array('products' => $product_collections);
                                 $url = $this->helperblock->getProductCronUrl() . "?api_token=" . $token . $app_data['store_token'];
@@ -181,6 +181,7 @@ class Observer
                                 } else {
                                     $this->_logger->info("Empty Response or response doesn't contains array for sku" . $product['sku']);
                                 }
+                                $productsize+= count($product_collections);
                             }
                                 $time_end = microtime(true);
                                 $execution_time = ($time_end - $time_start) / 60;
