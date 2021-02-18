@@ -34,6 +34,7 @@ class Observer
     protected $helperblock;
     protected $coreDate = null;
     protected $_logger = null;
+    protected $frontUrlModel;
 
     public function __construct(
         \Magento\Framework\HTTP\Client\Curl $curl,
@@ -44,7 +45,8 @@ class Observer
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory,
         \Axtrics\Aframark\Model\ResourceModel\Cron\CollectionFactory $cronCollection,
-        \Axtrics\Aframark\Block\Data $helperBlock
+        \Axtrics\Aframark\Block\Data $helperBlock,
+        \Magento\Framework\UrlInterface $frontUrlModel
     ) {
         $this->_curl = $curl;
         $this->_logger = $logger;
@@ -55,6 +57,7 @@ class Observer
         $this->cronCollection    = $cronCollection;
         $this->scopeConfig = $scopeConfig;
         $this->helperblock = $helperBlock;
+        $this->frontUrlModel = $frontUrlModel;
     }
 
     public function SyncProducts(\Magento\Cron\Model\Schedule $schedule)
@@ -108,7 +111,7 @@ class Observer
 
                             $collection->setCurPage(1)->setPageSize($limit)->load();
                             $numberOfPages = $collection->getLastPageNumber();
-                            $productsize=0;
+                            $productsize = 0;
                             for ($i = 1; $i <= $numberOfPages; $i++) {
                                 $products =  $this->productCollection->create();
                                 $products->addAttributeToFilter('status', \Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
@@ -145,7 +148,12 @@ class Observer
                                             $categorys[] = $_category->getName();
                                         }
                                     }
-
+                                    $storeId = $this->_storeManager->getDefaultStoreView()->getStoreId();
+                                    $routeParams['id'] = $productData->getId();
+                                    $routeParams['s'] = $productData->getUrlKey();
+                                    $producturl = $this->frontUrlModel->getUrl('catalog/product/view', [
+                                        '_scope' => $storeId, 'id' => $routeParams['id'], 's' => $routeParams['s'], '_nosid' => true
+                                    ]);
                                     $product_collections[] = array(
                                         'id' => $product['entity_id'],
                                         'title' => $productData->getName(),
@@ -157,23 +165,21 @@ class Observer
                                         'ean' => !empty($productData[$ean]) ? $productData[$ean] : '',
                                         'isbn' => !empty($productData[$isbn]) ? $productData[$isbn] : '',
                                         'price' => $productData->getPrice(),
-                                        'url' => $productData->getProductUrl(),
+                                        'url' => $producturl,
 
                                     );
                                 }
-                                
+
                                 $token = substr(md5(microtime()), rand(0, 26), 5);
                                 $responsedata = array('products' => $product_collections);
                                 $url = $this->helperblock->getProductCronUrl() . "?api_token=" . $token . $app_data['store_token'];
                                 $this->_curl->post($url, $responsedata);
                                 $response = $this->_curl->getBody();
+                                $header = $this->_curl->getStatus();
                                 $responsearray = json_decode($response, TRUE);
-                                if ($responsearray == "Products limit reached as per subscribed plan.") {
-                                    $this->_logger->info("Limit Reached " . $responsearray);
-                                    break;
-                                }
-                                if (!empty($responsearray) && is_array($responsearray)) {
-                                    if (array_key_exists("status", $responsearray) && $responsearray[0]['status'] == "200") {
+
+                                if (!empty($responsearray)) {
+                                    if ($header == '200') {
                                         $this->_logger->info("Product Cron Success" . $response);
                                     } else {
                                         $this->_logger->info("Product Cron Fail" . $response);
@@ -181,12 +187,12 @@ class Observer
                                 } else {
                                     $this->_logger->info("Empty Response or response doesn't contains array for sku" . $product['sku']);
                                 }
-                                $productsize+= count($product_collections);
+                                $productsize += count($product_collections);
                             }
-                                $time_end = microtime(true);
-                                $execution_time = ($time_end - $time_start) / 60;
-                                $msg = 'Total ' . $productsize . ' has been inserted in ' . $execution_time . ' Mins.';
-                                $this->_logger->info("Cron Batch Executed in" . $msg);
+                            $time_end = microtime(true);
+                            $execution_time = ($time_end - $time_start) / 60;
+                            $msg = 'Total ' . $productsize . ' has been inserted in ' . $execution_time . ' Mins.';
+                            $this->_logger->info("Cron Batch Executed in" . $msg);
                         }
                     }
                 }
