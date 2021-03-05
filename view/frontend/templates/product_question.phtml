@@ -1,26 +1,26 @@
-<?php 
+<?php
     $product = $block->getCurrentProduct();
     $model = $block->getAfraModel();
     $app_data=$model->getCollection()->getFirstItem();
-    $token = substr(md5(microtime()),rand(0,26),5);
-    $url= $block->AframarkUrl();
+    $token = $block->generateRandomString();
+    $url= $block->getAframarkUrl();
     $widget= $block->getWiget();
     $widgetips= $block->getwidgetips();
-    $widgetips=explode(",",$widgetips);
+    $widgetips=explode(",", $widgetips);
     $widget=$block->getWiget();
     $matched=false;
     
-        if (in_array($block->getUserip(), $widgetips)){
-        // Match IP
-        $matched= true;
-    }
+if (in_array($block->getUserip(), $widgetips)) {
+// Match IP
+    $matched= true;
+}
     
 ?>
 
-<?php if($widget!='0' || $matched!=false): ?>   
-<!-- Disable/Enable widget Q/A -->         
-<?php if(!empty($app_data->getData())): ?>
-<script type="text/javascript" async="" src="<?php echo $url;?>/js/Widgets/WidgetQA.js?ver=0.2.9"></script>
-<div id="aframark-container" data-ak-api-token='<?php echo $token.$app_data['store_token'] ?>' data-ak-merchant-code='<?php echo $app_data['merchant_code'] ?>' data-ak-sku='<?php echo $product->getSku(); ?>'></div>
+<?php if ($widget!='0' || $matched!=false): ?>          
+    <?php if (!empty($app_data->getData())): ?>
+    <!-- Disable/Enable widget Q/A -->  
+<script type="text/javascript" async="" src="<?= /* @noEscape */  $url;?>/js/Widgets/WidgetQA.js?ver=0.2.9"></script>
+<div id="aframark-container" data-ak-api-token='<?= /* @noEscape */  $token.$app_data['store_token'] ?>' data-ak-merchant-code='<?= /* @noEscape */ $app_data['merchant_code'] ?>' data-ak-sku='<?= /* @noEscape */  $product->getSku(); ?>'></div>
 <?php endif; ?>
 <?php endif; ?>

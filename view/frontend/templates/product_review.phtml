@@ -1,43 +1,41 @@
-<?php 
+<?php
     $product = $block->getCurrentProduct();
     $model = $block->getAfraModel();
     $app_data=$model->getCollection()->getFirstItem();
-    $token = substr(md5(microtime()),rand(0,26),5);
+    $token = $block->generateRandomString();
     $widget= $block->getWiget();
     $widgetips= $block->getwidgetips();
-    $widgetips=explode(",",$widgetips);
+    $widgetips=explode(",", $widgetips);
     $matched=false;
-    if (in_array($block->getUserip(), $widgetips)){
-        $matched= true;
-    }
+if (in_array($block->getUserip(), $widgetips)) {
+    $matched= true;
+}
   
 ?>
-<?php if($widget!='0' || $matched!=false): ?>   
-<?php if((!empty($app_data->getData()))): ?>
-<?php 
-        $questiondata=$block->getAskQuestion($product,$app_data,$token);
-        if ($questiondata !='Not Authorized') {
-        $questions = json_decode($questiondata);
-        
-        if ($questions != null) {
-        ?>
-        <div id="aframark-container-micro" >
-          <img src="<?php echo $this->getViewFileUrl("Axtrics_Aframark::images/aframark-icon.svg"); ?>" width="16"><a id="question-tab" href="#tab-label-questionstab"><?php echo $questions->totalRecords.' answered questions';?></a>
-        </div>
+<?php if ($widget!='0' || $matched!=false): ?>   
+    <?php if ((!empty($app_data->getData()))): ?>
         <?php
-        } 
-        else
-        {
-        ?>
+        $questiondata=$block->getAskQuestion($product, $app_data, $token);
+        if ($questiondata !='Not Authorized') {
+            $questions = json_decode($questiondata);
+        
+            if ($questions != null) {
+                ?>
+        <div id="aframark-container-micro" >
+          <img src="<?= /* @noEscape */ $block->getViewFileUrl("Axtrics_Aframark::images/aframark-icon.svg"); ?>" width="16"><a id="question-tab" href="#tab-label-questionstab"><?= /* @noEscape */ $questions->totalRecords.' answered questions';?></a>
+        </div>
+                <?php
+            } else {
+                ?>
         <div id="aframark-container-micro">
-        <img src="<?php echo $this->getViewFileUrl("Axtrics_Aframark::images/aframark-icon.svg"); ?>" width="16"><a id="question-tab" href="#tab-label-questionstab">Ask a question</a>
+        <img src="<?= /* @noEscape */ $block->getViewFileUrl("Axtrics_Aframark::images/aframark-icon.svg"); ?>" width="16"><a id="question-tab" href="#tab-label-questionstab">Ask a question</a>
        </div> 
-       <?php      
-         }
+                <?php
+            }
         }
 
-?>
-<?php endif; ?>
+        ?>
+    <?php endif; ?>
 
 <script type="text/javascript">
         require([

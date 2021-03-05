@@ -7,41 +7,41 @@
     <fieldset id="cron_fieldset" class="fieldset ">
         <label class="mage-error" style="display:none"></label>
         <div class="fieldset" id="cron-setting">
-            <input id="cron_expr" value="<?php echo $block->escapeHtmlAttr($block->getSGSCronExpr()); ?>" name="groups[cron_mapping_setting][fields][aframark_cron][value]" data-ui-id="text-groups-cron-mapping-setting-fields-aframark-cron-value" value="" class="input-text admin__control-text" type="text">
+            <input id="cron_expr" value="<?= $block->escapeHtmlAttr($block->getSGSCronExpr()); ?>" name="groups[cron_mapping_setting][fields][aframark_cron][value]" data-ui-id="text-groups-cron-mapping-setting-fields-aframark-cron-value" value="" class="input-text admin__control-text" type="text">
             <table>
                 <thead>
                     <tr>
-                        <th><?php echo $block->escapeHtml(__('Days of the week')); ?></th>
-                        <th colspan="4"><?php echo $block->escapeHtml(__('Hours of the day')); ?></th>
+                        <th><?= $block->escapeHtml(__('Days of the week')); ?></th>
+                        <th colspan="4"><?= $block->escapeHtml(__('Hours of the day')); ?></th>
                     </tr>
                 </thead>
                 <tr>
                     <td class="cron-d-box">
                         <label class="data-grid-checkbox-cell-inner">
                             <input class="admin__control-checkbox cron-box day" value="Monday" id="d-Monday" type="checkbox" />
-                            <label for="d-Monday">&nbsp;<?php echo $block->escapeHtml(__('Monday')); ?></label>
+                            <label for="d-Monday">&nbsp;<?= $block->escapeHtml(__('Monday')); ?></label>
                         </label>
                     </td>
                     <td rowspan="7" class="hours">
                         <table>
-                            <?php for ($h = 0; $h < 12; $h++) : ?>
+                            <?php for ($h = 0; $h < 12; $h++): ?>
                                 <?php $am = str_pad($h, 2, "0", STR_PAD_LEFT); ?>
                                 <?php $pm = $h + 12; ?>
                                 <tr>
                                     <td class="cron-h-box">
                                         <label class="data-grid-checkbox-cell-inner">
-                                            <input class="cron-box hour admin__control-checkbox" type="checkbox" value="<?php /* @noEscape */ echo $am; ?>:00" id="h-<?php /* @noEscape */ echo $am; ?>00" />
-                                            <label for="h-<?php /* @noEscape */ echo $am; ?>00">
-                                                &nbsp;<?php echo $block->escapeHtml(__($am . ':00 AM')); ?>
+                                            <input class="cron-box hour admin__control-checkbox" type="checkbox" value="<?= /* @noEscape */ $am; ?>:00" id="h-<?= /* @noEscape */ $am; ?>00" />
+                                            <label for="h-<?= /* @noEscape */  $am; ?>00">
+                                                &nbsp;<?= $block->escapeHtml(__($am . ':00 AM')); ?>
                                             </label>
                                         </label>
                                     </td>
 
                                     <td>
                                         <label class="data-grid-checkbox-cell-inner">
-                                            <input class="cron-box hour admin__control-checkbox" type="checkbox" value="<?php /* @noEscape */ echo $pm; ?>:00" id="h-<?php /* @noEscape */ echo $pm; ?>00" />
-                                            <label for="h-<?php /* @noEscape */ echo $pm; ?>00">
-                                                &nbsp;<?php echo $block->escapeHtml(__($am . ':00 PM')); ?>
+                                            <input class="cron-box hour admin__control-checkbox" type="checkbox" value="<?= /* @noEscape */  $pm; ?>:00" id="h-<?= /* @noEscape */ $pm; ?>00" />
+                                            <label for="h-<?= /* @noEscape */  $pm; ?>00">
+                                                &nbsp;<?= $block->escapeHtml(__($am . ':00 PM')); ?>
                                             </label>
                                         </label>
                                     </td>
@@ -52,13 +52,13 @@
                     </td>
                 </tr>
                 <?php $days = ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']; ?>
-                <?php foreach ($days as $day) : ?>
+                <?php foreach ($days as $day): ?>
                     <tr>
                         <td class="cron-d-box">
                             <label class="data-grid-checkbox-cell-inner">
-                                <input class="admin__control-checkbox cron-box day" value="<?php /* @noEscape */ echo $day; ?>" id="d-<?php /* @noEscape */ echo $day; ?>" type="checkbox" />
-                                <label for="d-<?php /* @noEscape */ echo $day; ?>">
-                                    &nbsp;<?php echo $block->escapeHtml(__($day)); ?>
+                                <input class="admin__control-checkbox cron-box day" value="<?= /* @noEscape */ $day; ?>" id="d-<?= /* @noEscape */  $day; ?>" type="checkbox" />
+                                <label for="d-<?= /* @noEscape */ $day; ?>">
+                                    &nbsp;<?= $block->escapeHtml(__($day)); ?>
                                 </label>
                             </label>
                         </td>

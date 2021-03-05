@@ -1,6 +1,5 @@
 /**
- * Copyright © 2020 Wyomind. All rights reserved.
- * See LICENSE.txt for license details.
+ * Copyright © 2021 Axtrics Solution Pvt. Ltd. All rights reserved.
  */
 
 define(["jquery"], function ($) {

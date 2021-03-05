@@ -22,7 +22,7 @@
                 <label>Connection Settings</label>
                  <field id="mode" translate="label" type="select" sortOrder="15" showInDefault="1" showInWebsite="0" showInStore="0" >
                     <label>Mode</label>
-                    <source_model>Axtrics\Aframark\Model\Config\Source\mode</source_model>
+                    <source_model>Axtrics\Aframark\Model\Config\Source\Mode</source_model>
                     <comment>Select Mode</comment>
                 </field>
                  <field id="display_widget" translate="label" type="select" sortOrder="16" showInDefault="1" showInWebsite="0" showInStore="0">
@@ -32,7 +32,6 @@
                 </field>
                  <field id="developer_ip" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0" >
                     <label> Developer IPs</label>
-             <!--         <backend_model>Axtrics\Aframark\Model\Config\Backend\AppKey</backend_model> -->
                     <comment>Enter developer ips with comma separated</comment>
                     <depends>
                     <field id="Axtrics_Aframark_config/connection_setting/display_widget">0</field>
@@ -42,7 +41,6 @@
                 <field id="app_key" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0" >
                     <label>App key</label>
                     <validate>required-entry validate-length minimum-length-32 maximum-length-32</validate>
-             <!--         <backend_model>Axtrics\Aframark\Model\Config\Backend\AppKey</backend_model> -->
                     <comment>You will find App key within your aframark control panel under store page. This is required to connect your store</comment>
 
                 </field>
@@ -50,7 +48,6 @@
                 <field id="secret_key" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="0" showInStore="0" >
                     <label>Secret key</label>
                     <validate>required-entry validate-length minimum-length-10 maximum-length-32</validate>
-                    <!--  <backend_model>Axtrics\Aframark\Model\Config\Backend\Secretkey</backend_model> -->
                     <comment>You will find Secret key within your aframark control panel under store page. This is required to connect your store.</comment>
                 </field>
                 <depends>
@@ -137,7 +134,6 @@
                  <field id="aframark_cron" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="0" showInStore="0">
                  <label>Setting</label>
                      <frontend_model>Axtrics\Aframark\Block\Adminhtml\System\Config\Cron</frontend_model> 
-                     <!-- <backend_model>Axtrics\Aframark\Model\Config\Backend\Cron</backend_model>  -->
                 </field>
                <depends>
                         <field id="Axtrics_Aframark_config/cron_mapping/cronenabled">1</field>
