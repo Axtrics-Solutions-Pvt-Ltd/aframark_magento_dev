@@ -5,7 +5,7 @@
  */
 namespace Axtrics\Aframark\Model\Config\Source;
 
-class mode implements \Magento\Framework\Option\ArrayInterface
+class Mode implements \Magento\Framework\Option\ArrayInterface
 {
     /**
      * Options getter
