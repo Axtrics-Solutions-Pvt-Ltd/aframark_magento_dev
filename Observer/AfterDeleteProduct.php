@@ -78,7 +78,7 @@ class AfterDeleteProduct implements ObserverInterface
 $product = false;
 $this->logger->critical('Error message', ['exception' => $e]);
     	
-    }   
+        }   
     }
 }
    

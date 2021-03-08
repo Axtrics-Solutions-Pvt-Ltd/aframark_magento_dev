@@ -6,10 +6,6 @@ use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 
-/**
- * Class AfterProduct
- * @package Axtrics\Aframark\Observer
- */
 class AfterProduct implements ObserverInterface
 {
     /**
@@ -167,7 +163,6 @@ class AfterProduct implements ObserverInterface
             'action' => $action, 'status' => $status,  'merchant_code' => $app_data['merchant_code'],
             'products' => $product_collections
         );
-
 
         $url = $this->helperblock->getAfraUrl();
         $this->_curl->post($url, $responsedata);
