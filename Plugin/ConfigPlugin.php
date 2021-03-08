@@ -37,7 +37,6 @@ class ConfigPlugin
         $this->request = $request;
     }
 
-
     /**
      * Config save after plugin
      */
@@ -46,7 +45,7 @@ class ConfigPlugin
         \Closure $proceed
     ) {
         $data = $this->request->getPostValue();
-        $model = $this->_objectManager->create('Axtrics\Aframark\Model\Aframark');
+        $model = $this->_objectManager->create(\Axtrics\Aframark\Model\Aframark::class);
         $app_data = $model->getCollection()->getFirstItem();
 
         if (isset($data['config_state']['Axtrics_Aframark_config_general'])) {

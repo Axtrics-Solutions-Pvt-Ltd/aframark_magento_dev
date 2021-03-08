@@ -2,10 +2,7 @@
 namespace Axtrics\Aframark\Observer;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
-/**
- * Class AfterDeleteProduct
- * @package Axtrics\Aframark\Observer
- */
+
 class AfterDeleteProduct implements ObserverInterface
 {
     /**
@@ -76,16 +73,12 @@ class AfterDeleteProduct implements ObserverInterface
     	
     	$response = $this->_curl->getBody();
     	
-      
     }
     catch(\Exception $e){
 $product = false;
 $this->logger->critical('Error message', ['exception' => $e]);
     	
-    }
-      
-			return ; 
-        
+    }   
     }
 }
    

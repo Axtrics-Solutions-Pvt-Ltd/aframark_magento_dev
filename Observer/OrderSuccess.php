@@ -3,10 +3,7 @@ namespace Axtrics\Aframark\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\App\Request\DataPersistorInterface;
-/**
- * Class OrderSuccess
- * @package Axtrics\Aframark\Observer
- */
+
 class OrderSuccess implements ObserverInterface
 {
     /**
@@ -54,7 +51,6 @@ class OrderSuccess implements ObserverInterface
      * @var objectmanager
      */
     protected $_objectManager;
-
 
     /**
      * @param Logger $logger
@@ -115,15 +111,15 @@ class OrderSuccess implements ObserverInterface
                         $items=array();
                         foreach ($orderItems as $listitems) 
                         {
-                        $getproduct = $this->_objectManager->create('Magento\Catalog\Model\Product')->load($listitems['product_id']);
-                           $store = $this->_objectManager->get('Magento\Store\Model\StoreManagerInterface')->getStore();
+                        $getproduct = $this->_objectManager->create(\Magento\Catalog\Model\Product::class)->load($listitems['product_id']);
+                           $store = $this->_objectManager->get(\Magento\Store\Model\StoreManagerInterface::class)->getStore();
                                 $producturl=$getproduct->getProductUrl();
                             $productImageUrl = $store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product' . $getproduct->getImage();
                                  $parentIds = $this->_configurable->getParentIdsByChild($listitems['product_id']);
                          $parentId = array_shift($parentIds);
                          
                          if($parentId){
-                         $parentrepository=$this->_objectManager->create('Magento\Catalog\Model\Product')->load($parentId);
+                         $parentrepository=$this->_objectManager->create(\Magento\Catalog\Model\Product::class)->load($parentId);
                          $parentsku="";
                          $parentsku=$parentrepository->getSku();
                          }
