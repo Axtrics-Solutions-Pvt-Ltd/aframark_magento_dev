@@ -13,9 +13,9 @@ class AfterProduct implements ObserverInterface
      *
      */
     /**
-   * @var \Magento\Framework\App\Config\ScopeConfigInterface
-   */
-   protected $scopeConfig;
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
+    protected $scopeConfig;
     /**
      * @var curl
      */
@@ -82,69 +82,72 @@ class AfterProduct implements ObserverInterface
     {
         try {
 
-        $param = $observer->getEvent()->getProduct();
-        if ($param->isObjectNew() == 1) {
-            $action = "Added";
-        } else {
-            $action = "Updated";
-        }
-        $storeId = $this->_storeManager->getDefaultStoreView()->getStoreId();
-        $product = $this->productRepository->getById($param->getId());
-        $app_data = $this->_afra->getCollection()->getFirstItem();
-        $routeParams['id'] = $product->getId();
-        $routeParams['s'] = $product->getUrlKey();
-        $producturl = $this->frontUrlModel->getUrl('catalog/product/view', [
-            '_scope' => $storeId, 'id' => $routeParams['id'], 's' => $routeParams['s'], '_nosid' => true
-        ]);
-        $producturl = preg_replace('#/catalog/product/view/id/\d+/s#', '', $producturl);
-        if ($app_data['upc_attribute_code'] != null) {
-            $upc = $app_data['upc_attribute_code'];
-        } else {
-            $upc = "Null";
-        }
-        if ($app_data['ean_attribute_code'] != null) {
-            $ean = $app_data['ean_attribute_code'];
-        } else {
-            $ean = "Null";
-        }
-        if ($app_data['mpn_attribute_code'] != null) {
-            $mpn = $app_data['mpn_attribute_code'];
-        } else {
-            $mpn = "Null";
-        }
-        if ($app_data['isbn_attribute_code'] != null) {
-            $isbn = $app_data['isbn_attribute_code'];
-        } else {
-            $isbn = "Null";
-        }
-        $url = $product->getImage();
-        $url = substr($url, -4);
-        if ($url == '.tmp') {
-            $newurl = $product->getImage();
-            $newurl = substr($newurl, 0, -4);
-            $image_url = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product' . $newurl;
-        } else {
-            $image_url = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product' . $product->getImage();
-        }
-        $cats = $product->getCategoryIds();
-        $categorys = array();
-        if (count($cats)) {
-            foreach ($cats as $cat) {
-
-                $_category =  $this->_category->load($cat);
-                $categorys[] = $_category->getName();
+            $param = $observer->getEvent()->getProduct();
+            if ($param->isObjectNew() == 1) {
+                $action = "Added";
+            } else {
+                $action = "Updated";
             }
-        }
+            $storeId = $this->_storeManager->getDefaultStoreView()->getStoreId();
+            $product = $this->productRepository->getById($param->getId());
+            $app_data = $this->_afra->getCollection()->getFirstItem();
+            $routeParams['id'] = $product->getId();
+            $routeParams['s'] = $product->getUrlKey();
+            $producturl = $this->frontUrlModel->getUrl('catalog/product/view', [
+            '_scope' => $storeId, 'id' => $routeParams['id'], 's' => $routeParams['s'], '_nosid' => true
+            ]);
+            $producturl = preg_replace('#/catalog/product/view/id/\d+/s#', '', $producturl);
+            if ($app_data['upc_attribute_code'] != null) {
+                $upc = $app_data['upc_attribute_code'];
+            } else {
+                $upc = "Null";
+            }
+            if ($app_data['ean_attribute_code'] != null) {
+                $ean = $app_data['ean_attribute_code'];
+            } else {
+                $ean = "Null";
+            }
+            if ($app_data['mpn_attribute_code'] != null) {
+                $mpn = $app_data['mpn_attribute_code'];
+            } else {
+                $mpn = "Null";
+            }
+            if ($app_data['isbn_attribute_code'] != null) {
+                $isbn = $app_data['isbn_attribute_code'];
+            } else {
+                $isbn = "Null";
+            }
+            $url = $product->getImage();
+            $url = substr($url, -4);
+            if ($url == '.tmp') {
+                $newurl = $product->getImage();
+                $newurl = substr($newurl, 0, -4);
+                $image_url = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product' . $newurl;
+            } else {
+                $image_url = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product' . $product->getImage();
+            }
+            $cats = $product->getCategoryIds();
+            $categorys = [];
+            if (count($cats)) {
+                foreach ($cats as $cat) {
+
+                    $_category =  $this->_category->load($cat);
+                    $categorys[] = $_category->getName();
+                }
+            }
  
-           if(!empty($this->scopeConfig->getValue('catalog/seo/product_url_suffix', 
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE)))
-           {
-            $suffix=$this->scopeConfig->getValue('catalog/seo/product_url_suffix', 
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-            $producturl = rtrim($producturl, '/');
-            $producturl=$producturl.$suffix;
-           }
-            $product_collections = array(
+            if (!empty($this->scopeConfig->getValue(
+                'catalog/seo/product_url_suffix',
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+            ))) {
+                $suffix=$this->scopeConfig->getValue(
+                    'catalog/seo/product_url_suffix',
+                    \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+                );
+                $producturl = rtrim($producturl, '/');
+                $producturl=$producturl.$suffix;
+            }
+            $product_collections = [
             'id' => $product->getId(),
             'title' => $product->getName(),
             'sku' => $product->getSku(),
@@ -157,16 +160,16 @@ class AfterProduct implements ObserverInterface
             'price' => $product->getPrice(),
             'url' => $producturl,
 
-        );
-        $status = $product->getStatus() == 1 ? 'enabled' : 'disabled';
-        $responsedata = array(
+            ];
+            $status = $product->getStatus() == 1 ? 'enabled' : 'disabled';
+            $responsedata = [
             'action' => $action, 'status' => $status,  'merchant_code' => $app_data['merchant_code'],
             'products' => $product_collections
-        );
+            ];
 
-        $url = $this->helperblock->getAfraUrl();
-        $this->_curl->post($url, $responsedata);
-        $response = $this->_curl->getBody();
+            $url = $this->helperblock->getAfraUrl();
+            $this->_curl->post($url, $responsedata);
+            $response = $this->_curl->getBody();
         } catch (\Exception $e) {
             $this->logger->critical('Error message', ['exception' => $e]);
         }

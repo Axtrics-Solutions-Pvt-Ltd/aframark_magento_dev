@@ -33,8 +33,7 @@ class Uninstall implements UninstallInterface
     public function __construct(
         CollectionFactory $collectionFactory,
         Data $configResource
-    )
-    {
+    ) {
         $this->collectionFactory = $collectionFactory;
         $this->configResource    = $configResource;
     }
@@ -54,9 +53,9 @@ class Uninstall implements UninstallInterface
         $setup->endSetup();
     }
      /**
-     * @param AbstractModel $config
-     * @throws \Exception
-     */
+      * @param AbstractModel $config
+      * @throws \Exception
+      */
     protected function deleteConfig(AbstractModel $config)
     {
         $this->configResource->delete($config);

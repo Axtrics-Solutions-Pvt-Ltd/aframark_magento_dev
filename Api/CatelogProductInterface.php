@@ -4,6 +4,7 @@
  * Contributor Author : Shubham Kumar
  */
 namespace Axtrics\Aframark\Api;
+
 /**
  * Interface CatelogProductInterface
  * @api
@@ -17,7 +18,7 @@ interface CatelogProductInterface
      */
     public function tokenGeneration();
 
-	/**
+    /**
      * Return All Product Collection.
      *
      * @return array
@@ -32,17 +33,16 @@ interface CatelogProductInterface
     public function countProduct();
 
      /**
-     * Return Customer Count.
-     *
-     * @return count
-     */
+      * Return Customer Count.
+      *
+      * @return count
+      */
     public function countCustomer();
 
      /**
-     * Return Customer Collection.
-     *
-     * @return array
-     */
+      * Return Customer Collection.
+      *
+      * @return array
+      */
     public function customerCollection();
-    
 }

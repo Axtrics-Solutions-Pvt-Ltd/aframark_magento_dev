@@ -39,12 +39,12 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
                     'Secret Key'
                 )
                ->addColumn(
-                    'merchant_code',
-                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
-                    255,
-                    [],
-                    'Merchant Code'
-                )
+                   'merchant_code',
+                   \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                   255,
+                   [],
+                   'Merchant Code'
+               )
                 ->addColumn(
                     'store_token',
                     \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
@@ -108,17 +108,18 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
                     'Last Connection Time'
                 )
                 ->addColumn(
-                        'created_at',
-                        \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
-                        null,
-                        ['nullable' => false, 'default' => \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT],
-                        'Created At'
+                    'created_at',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
+                    null,
+                    ['nullable' => false, 'default' => \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT],
+                    'Created At'
                 )->addColumn(
                     'updated_at',
                     \Magento\Framework\DB\Ddl\Table::TYPE_TIMESTAMP,
                     null,
                     ['nullable' => false, 'default' => \Magento\Framework\DB\Ddl\Table::TIMESTAMP_INIT_UPDATE],
-                    'Updated At')
+                    'Updated At'
+                )
                 ->setComment('Aframark Record');
             $installer->getConnection()->createTable($table);
 

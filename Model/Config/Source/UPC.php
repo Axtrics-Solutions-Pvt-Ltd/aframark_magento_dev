@@ -8,12 +8,11 @@ namespace Axtrics\Aframark\Model\Config\Source;
 class UPC implements \Magento\Framework\Option\ArrayInterface
 {
 
-	protected $attribute;
- public function __construct(
+    protected $attribute;
+    public function __construct(
         \Magento\Catalog\Model\ResourceModel\Eav\Attribute $attribute
     ) {
         $this->attribute = $attribute;
-
     }
 
     /**
@@ -23,15 +22,15 @@ class UPC implements \Magento\Framework\Option\ArrayInterface
      */
     public function toOptionArray()
     {
-    	$entityTypeId='4';
-    	$attribute_key[]=['value' => '0', 'label' => __('Select One')];
+        $entityTypeId='4';
+        $attribute_key[]=['value' => '0', 'label' => __('Select One')];
 
-    	$collection = $this->attribute->getCollection()
-    	->addFieldToFilter('entity_type_id', ['eq' => $entityTypeId]);
-    	$attributes = $collection->toArray();
-    	foreach ($attributes['items'] as $key => $value) {
-    		$attribute_key[]=['value' => $value['attribute_code'], 'label' => __($value['attribute_code'])];
-    	}
+        $collection = $this->attribute->getCollection()
+        ->addFieldToFilter('entity_type_id', ['eq' => $entityTypeId]);
+        $attributes = $collection->toArray();
+        foreach ($attributes['items'] as $key => $value) {
+            $attribute_key[]=['value' => $value['attribute_code'], 'label' => __($value['attribute_code'])];
+        }
 
         return $attribute_key;
     }

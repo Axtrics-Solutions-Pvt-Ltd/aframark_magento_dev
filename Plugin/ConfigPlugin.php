@@ -80,14 +80,14 @@ class ConfigPlugin
                     $this->configWriter->save('Axtrics_Aframark_config/Gtm_mapping/aframark_isbn', null, $scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT, $scopeId = 0);
                 }
 
-                $appdata = array(
+                $appdata = [
                     "app_key" => $data['groups']['connection_setting']['fields']['app_key']['value'],
                     "secret_key" => $data['groups']['connection_setting']['fields']['secret_key']['value'],
                     "upc_attribute_code" => $upc_code,
                     "ean_attribute_code" => $ean_code,
                     "mpn_attribute_code" => $mpn_code,
                     "isbn_attribute_code" => $isbn_code
-                );
+                ];
 
                 if ($app_data->getdata('app_id')) {
                     $appdata['app_id'] = $app_data->getdata('app_id');

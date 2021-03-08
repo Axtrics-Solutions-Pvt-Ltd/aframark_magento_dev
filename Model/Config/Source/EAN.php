@@ -9,11 +9,10 @@ class EAN implements \Magento\Framework\Option\ArrayInterface
 {
 
     protected $attribute;
- public function __construct(
+    public function __construct(
         \Magento\Catalog\Model\ResourceModel\Eav\Attribute $attribute
     ) {
         $this->attribute = $attribute;
-
     }
 
     /**
