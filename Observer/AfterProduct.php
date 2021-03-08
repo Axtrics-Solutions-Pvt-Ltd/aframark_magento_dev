@@ -175,6 +175,5 @@ class AfterProduct implements ObserverInterface
         } catch (\Exception $e) {
             $this->logger->critical('Error message', ['exception' => $e]);
         }
-        return;
     }
 }
