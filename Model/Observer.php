@@ -218,6 +218,18 @@ class Observer
                                         $producturl = $this->frontUrlModel->getUrl('catalog/product/view', [
                                             '_scope' => $storeId, 'id' => $routeParams['id'], 's' => $routeParams['s'], '_nosid' => true
                                         ]);
+                                        $producturl = preg_replace('#/catalog/product/view/id/\d+/s#', '', $producturl);
+                                        if (!empty($this->scopeConfig->getValue(
+                                            'catalog/seo/product_url_suffix',
+                                            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+                                        ))) {
+                                            $suffix=$this->scopeConfig->getValue(
+                                                'catalog/seo/product_url_suffix',
+                                                \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+                                            );
+                                            $producturl = rtrim($producturl, '/');
+                                            $producturl=$producturl.$suffix;
+                                        }
                                         $product_collections = [
                                             'id' => $product['entity_id'],
                                             'title' => $productData->getName(),
