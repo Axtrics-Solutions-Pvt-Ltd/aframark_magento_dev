@@ -1,6 +1,6 @@
 # (Development Only) The official Aframark extension for Magento 2
 
-Please note that this is the development version of the app and for internal user only. If you are looking for the production/sandbox version then kindly use this link:
+Please note that this is the development version of the app and for internal use only. If you are looking for the production/sandbox version then kindly use this link:
 https://github.com/Axtrics-Solutions-Pvt-Ltd/aframark_magento
 
 To install the Aframark plugin on your website, please follow the steps provided in this package.
